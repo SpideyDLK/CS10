@@ -1,0 +1,126 @@
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -100px;
+    width: 20%;
+    height: 20%;
+}
+
+.rectangle{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -50px;
+    background-color: rgb(248, 245, 245);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #1f4353;
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    height: 500px;
+}
+
+@font-face {
+    font-family: rounded;
+    src: url(../material/rounded.otf);
+}
+
+@font-face {
+    font-family: body;
+    src: url(../material/body.ttf);
+}
+
+.loginForm{
+    position: relative;
+    display: block;
+    margin-top: 50px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.loginForm select{
+    padding: 8px 12px;
+    color: teal;
+    font-family: body;
+    background-color: #eeeeee;
+    border: 1px solid #dddddd;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.loginForm select:focus,
+.loginForm select:hover{
+    outline: teal;
+    border: 1px solid #bbbbbb;
+}
+
+.loginForm select option{
+    background: white;
+}
+
+.loginForm label {
+    float: left;
+    font-family: body;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.username,.password{
+    font-family: body;
+    height: 25px; 
+    width: 300px; 
+    background-color: transparent;  
+    border-style: solid;  
+    border-width: 0px 0px 1px 0px;  
+    border-color: teal; 
+    outline:0; 
+}
+.loginForm button{
+    font-family: body;
+}
+.fp{
+    color: teal;
+    font-family: body;
+    float: right;
+    font-size: 15px;
+}
+.su{
+    color: teal;
+    font-family: body;
+}
+
+.loginForm button{
+    background-image: url(../material/login_button.jpg);
+    background-size:cover;
+    color: white;
+    font-weight: bold;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 80%;
+}
+
+.rectangle h{
+    position: relative;
+    top: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: rounded;
+    color: teal;
+}
+
+body{
+    background-image: url("../material/home_back.jpg");
+    background-size: cover;
+    margin: 0%;
+    font-family: body;
+}
