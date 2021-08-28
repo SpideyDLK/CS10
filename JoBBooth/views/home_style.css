@@ -1,21 +1,52 @@
 #logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -100px;
+    margin-top: 9px;
     width: 20%;
-    height: 20%;
 }
 
+.logoBack{
+    width: 100%;
+    height: 220px;
+    background: rgba(0,128,128,0.5);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.desc p1{
+    position: absolute;
+    top: 30%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 70px;
+}
+
+.desc p2{
+    margin-right: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 20px;
+}
+
+.desc p3{
+    margin-right: 500px;
+    position: absolute;
+    top: 65%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 20px;
+}
+
+
+
 .rectangle{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -50px;
-    background-color: rgb(248, 245, 245);
-    border-style: solid;
-    border-width: 1px;
-    border-color: #1f4353;
+    position: absolute;
+    right: 100px;
+    margin-top: 30px;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 10px;
     text-align: center;
     width: 350px;
@@ -70,14 +101,26 @@
 
 .username,.password{
     font-family: body;
+    float: right;
     height: 25px; 
-    width: 300px; 
+    width: 275px; 
     background-color: transparent;  
     border-style: solid;  
     border-width: 0px 0px 1px 0px;  
     border-color: teal; 
     outline:0; 
 }
+
+.username:focus::placeholder, .password:focus::placeholder{
+    color: transparent;
+}
+
+.fas{
+    margin-top: 7px;
+    margin-right: 7px;
+    color: teal;
+}
+
 .loginForm button{
     font-family: body;
 }
@@ -119,8 +162,13 @@ button:hover {
 }
 
 body{
-    background-image: url("../material/home_back.jpg");
+    background: url("../material/home_back.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -moz-background-size: cover;
     background-size: cover;
-    margin: 0%;
     font-family: body;
+    margin-top: -110px;
+    margin-left: 0%;
+    margin-right: 0%;
 }
