@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organization Home Page</title>
+        <link rel="stylesheet" href="Org_Homepage_Style.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- style -->
+        <style>
+            table, th, td {
+              border: 2px solid black;
+            }
+            </style>
+</head>
+<body>
+  <div class="logoBack">
+  
+      <div class="logo"> <img id="logo" src="../material/LOGO.png" alt="JoBBooth"> </div>
+  
+
+          <div class="help">
+          <a href="help.html">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <div class="contact">
+          <a href="contact.html">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <div class="about">
+          <a href="about.html">About</a></div>
+      </div>
+  
+  <br> 
+  <br><br>
+
+  <div class="orgDescrip">
+      
+      <input type="text" id="orgDescrip" name="orgDescrip" style="height:120px; width: 1000px; text-align: center; font-size: 180%; font-family: 'Times New Roman'; font-weight: bold; background-color:linen;" placeholder="Descreption" autocomplete="off">
+      <input type="image" id="ProfilePhoto" name="ProfilePhoto" src="../material/Recruiter_Profile_Pic.jpg" style="height:120px; width: 100px; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold; background-color:linen;" placeholder="Photo" aria-autocomplete="none">
+      <button type="submit" id="DesUpdate">Update Description</button>
+  
+  </div> 
+      
+  <br><br>
+
+  
+  <div class="Functions">
+  <br><hr>
+          <button type="submit" id="ScheduleInterviewbtn">Schedule Interview</button> 
+          <button type="submit" id="MyAdbtn">My Ads</button>
+          <button type="submit" id="PublishAdbtn">Publish Ad</button>
+          <button type="submit" id="HireRecruiterbtn">Hire a Recruiter</button>
+          <button type="submit" id="HireInterviewerbtn">Hire an Interviewer</button>
+  
+   </div>
+   
+
+  <!-- Search Candidate -->
+  <div class=" SearchCandidate">
+      <input type="text" id="SearchCandidate" name="CandidatePhoto"  style="height:40px; width: 85%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold; background-color:linen;" placeholder="Search Candidate" autocomplete="off">
+
+  </div>
+  <style>
+    input[type=text]{
+      outline: none;
+      transition: 0.3s;
+    }
+    input[type=text]:focus{
+      border-color: rgb(2, 105, 10);
+      box-shadow: 0 0 8px 0 darkgreen;
+  
+    }
+  </style>
+  <br>
+  <button type="submit" id="SearchCandidatebtn">Search</button>
+  <br>
+
+  <br><hr>
+  
+  <div class="highlightSearch">
+      
+  <div class="ResultTable">
+
+      <div class="Result">
+         <p><b><mark>Search Result</mark></b></p>
+      </div>
+
+      <table>
+          <tr>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Profile Photo</th>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Candidate's Name</th>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Interested Job Position</th>
+            <th style="height:40px; width: 40%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Qualifications</th>
+          </tr>
+        </table>
+        
+   </div>  
+  
+ </div>
+
+
+ <br><hr>
+ 
+ <div class="highlightSearch">
+     
+ <div class="ResultTable">
+
+     <div class="Result">
+        <p><b><mark>Job Applications</mark></b></p>
+     </div>
+
+     <table>
+         <tr>
+           <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Profile Photo</th>
+           <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Candidate's Name</th>
+           <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Interested Job Position</th>
+           <th style="height:40px; width: 40%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Qualifications</th>
+         </tr>
+       </table>
+       
+  </div>  
+  
+</div>
+
+<br><hr>
+
+<!-- last section -->
+<div class="lastSection">
+<div class="lastSection1">       
+          <p><b><mark>Recruiter's List</mark></b></p>
+      
+      <table>
+          <tr>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Profile Photo</th>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Candidate's Name</th>
+            <th style="height:40px; width: 25%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Rating</th>
+            <th style="height:40px; width: 45%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Feedback</th>
+          </tr>
+        </table>
+  </div>
+
+  
+  <div class="lastSection2">
+      
+          <p><b><mark>Interviewer's List</mark></b></p>
+
+      <table>
+          <tr>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Profile Photo</th>
+            <th style="height:40px; width: 20%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Candidate's Name</th>
+            <th style="height:40px; width: 25%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Rating</th>
+            <th style="height:40px; width: 45%; text-align: center; font-size: larger; font-family: 'Times New Roman'; font-weight: bold;">Feedback</th>
+          </tr>
+        </table>
+        <br>
+             
+     </div>
+</div>
+
+
+</body>
+</html>
