@@ -1,0 +1,542 @@
+:root{
+    --labelFont: 'Nunito', sans-serif;
+
+    --labelColor: #384047;
+    --offWhite: #f4f7f8;
+    --lightTeal: #B2D8D8;
+}
+#logoHome {
+    position: absolute;
+    top:10px;
+    width:400px;
+}
+
+#logo {
+    position: absolute;
+    top:10px;
+    margin-left: 230px;
+    width:200px;
+}
+
+.logoBack{
+    width: 100%;
+    margin-top: -8px;
+    height: 70px;
+    background: teal;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    user-select: none;
+}
+
+.logoBackHome{
+    width: 100%;
+    margin-top: -8px;
+    height: 120px;
+    background: rgba(0,128,128,0.5);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    user-select: none;
+}
+
+.navBar{
+    position: absolute;
+    right: 16%;
+    overflow: hidden;
+    text-align: center;
+    line-height: 70px;
+}
+.navBar a{
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 0px 25px;
+  text-decoration: none;
+  font-family: body;
+  font-weight: bold;
+}
+
+.navBar a:hover{
+    border-top: #384047 solid;
+    background-color: #ddd;
+    color: #384047;
+}
+
+.desc p1{
+    position: absolute;
+    top: 30%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 70px;
+}
+
+.desc p2{
+    margin-right: 500px;
+    line-height: 1.6;
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 20px;
+}
+
+.desc p3{
+    margin-right: 500px;
+    line-height: 1.6;
+    position: absolute;
+    top: 65%;
+    left: 50px;
+    color: white;
+    font-family: body;
+    font-size: 20px;
+}
+
+.loginFormContainer{
+    position: absolute;
+    right: 100px;
+    margin-top: 30px;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    height: 500px;
+}
+
+.loginFormContainer h{
+    margin-top: 10cm;
+    line-height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: rounded;
+    color: teal;
+    user-select: none;
+}
+
+.popUp{
+    color: red;
+    text-align: center;
+    line-height: 0.1;
+}
+
+@font-face {
+    font-family: rounded;
+    src: url(../material/fonts/rounded.otf);
+}
+
+@font-face {
+    font-family: body;
+    src: url(../material/fonts/body.ttf);
+}
+
+.loginForm{
+    position: flex;
+    display: block;
+    margin-top: 40px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+.eduDropdown {
+    position: relative;
+    user-select: none;
+    width: 265px;
+}
+
+.select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.select__trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    font-size: 16px;
+    font-weight: 300;
+    color: white;
+    height: 40px;
+    line-height: 60px;
+    background: teal;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.eduSelectButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 15px;
+    color: var(--labelColor);
+    height: 30px;
+    background: #e8eeef;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+    background: #fff;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.select.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+.custom-option {
+    position: relative;
+    display: block;
+    padding: 0 22px 0 22px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #3b3b3b;
+    line-height: 60px;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 10px;
+}
+.custom-option:hover {
+    cursor: pointer;
+    background-color: var(--lightTeal);
+}
+.custom-option.selected {
+    color: #ffffff;
+    background-color: teal;
+}
+
+.eduOption {
+    position: relative;
+    display: block;
+    height: 30px;
+    padding: 0 12px 0 12px;
+    font-size: 15px;
+    color: #3b3b3b;
+    line-height: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#default{
+    color: #8e8e8e;
+    cursor: default;
+}
+.arrow, .arrowCand {
+    position: relative;
+    height: 10px;
+    width: 10px;
+}
+.arrow::before, .arrow::after, .arrowCand::after, .arrowCand::before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    transition: all 0.5s;
+}
+.arrow::before {
+    left: -5px;
+    transform: rotate(-45deg);
+    background-color: white;
+}
+.arrowCand::before {
+    left: -5px;
+    transform: rotate(-45deg);
+    background-color: teal;
+}
+.arrow::after {
+    left: 5px;
+    transform: rotate(45deg);
+    background-color: white;
+}
+.arrowCand::after {
+    left: 5px;
+    transform: rotate(45deg);
+    background-color: teal;
+}
+.open .arrow::before, .open .arrowCand::before {
+    left: -5px;
+    transform: rotate(45deg);
+}
+.open .arrow::after, .open .arrowCand::after {
+    left: 5px;
+    transform: rotate(-45deg);
+}
+
+.username,.password{
+    font-family: body;
+    margin-left: 5px;
+    height: 25px; 
+    width: 250px; 
+    background-color: transparent;  
+    border-style: solid;  
+    border-width: 0px 0px 1px 0px;  
+    border-color: teal; 
+    outline:0; 
+    user-select: none;
+}
+
+.username:focus::placeholder, .password:focus::placeholder{
+    color: transparent;
+}
+
+#userIcon,#passIcon{
+    color: teal;
+}
+
+#eyeIcon{
+    color: teal;
+    margin-left: -22px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+#keyIcon{
+    color: teal;
+    margin-left: 155px;
+}
+
+.loginForm button{
+    font-family: body;
+}
+.fp{
+    color: teal;
+    font-family: body;
+    float: right;
+    font-size: 15px;
+}
+.fp:hover{
+    font-weight: 600;
+}
+.su{
+    color: teal;
+    font-family: body;
+}
+.su:hover{
+    font-weight: 600;
+}
+
+.loginForm button{
+    background-image: url(../material/images/login_button.jpg);
+    background-size:cover;
+    color: white;
+    font-weight: bold;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 80%;
+}
+
+
+
+body.home{
+    background: url("../material/images/home_back.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    font-family: body;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+body.signupOrg,body.signupCand{
+    margin-left: 0%;
+    margin-right: 0%;
+    overflow: hidden;
+}
+
+.authHeading{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.authHeading h{
+    font-weight: bold;
+    font-family: rounded;
+    font-size: 30px;
+    color: teal;
+    user-select: none;
+}
+
+.signUpOrgContainer{
+    background-color: var(--offWhite);
+    font-family: var(--labelFont);
+    font-size: 15px;
+    color: var(--labelColor);
+    margin: 10px auto;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 1000px;
+    height: 450px;
+    margin-bottom: 0;
+}
+
+.h{
+    text-align: center;
+    font-family: body;
+    color: var(--labelColor);
+    font-size: 25px;
+}
+
+.signUpOrgContainer label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.signUpOrgContainer input{
+    background: rgba(255,255,255,0.1);
+    border: none;
+    font-size: 15px;
+    height: 30px;
+    margin: 0;
+    outline: 0;
+    width: 260px;
+    background-color: #e8eeef;
+    color: #8a97a0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.col{
+    float: left;
+    width: 31%;
+}
+
+.col a{
+    text-align: center;
+}
+.midCol{
+    float: left;
+    width: 3.5%;
+    height: 600px;
+}
+
+fieldset{
+    border-radius: 10px;
+    border-color: var(--labelColor);
+    margin-top: 5px;
+}
+
+legend{
+    color: white;
+    padding: 3px 6px;
+    background-color: teal;
+    border-radius: 10px;
+}
+
+.signupButton{
+    color: white;
+    background-color: teal;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 53px;
+    margin-top: 10px;
+    font-family: body;
+    font-weight: bold;
+}
+
+.reqStar{
+    color: red;
+}
+
+#infoIcon{
+    color: teal;
+}
+
+.tooltip{
+    display: inline;
+}
+
+.tooltip .tooltipText{
+    visibility: hidden;
+    width: 200px;
+    background-color: teal;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    bottom: 43.55%;
+    margin-left: 0.5%;
+}
+
+.jptooltip .jptooltipText{
+    visibility: hidden;
+    width: 200px;
+    background-color: teal;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    bottom: 56.4%;
+    margin-left: 0.5%;
+}
+
+.tooltip .tooltipText::after {
+    content: "";
+    position: absolute;
+    bottom: 50%;
+    right: 100%;
+    transform: rotate(90deg);
+    border-width: 5px;
+    border-style: solid;
+    border-color: teal transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .haveAcc{
+    margin-top: 25px;
+    text-align:center;
+    font-family: body;
+  }
+
+  .link{
+      color: teal;
+  }
+
+  .link:hover{
+      font-weight: 600;
+  }
+
+  #handLeftIcon{
+      color: teal;
+  }
+
