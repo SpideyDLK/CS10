@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign Up - Organization</title>
+        <link rel="stylesheet" href="style.css">
+        <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
+        <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class="signupOrg">
+
+        <div class="logoBack">
+            <div> <img id="logo" src="../material/images/LOGO.png" alt="JoBBooth"> </div>
+            <div class="navBar">
+                <a href="#contact">CONTACT</a>
+                <a href="#news">ABOUT</a>
+                <a href="../views/home.php">HOME</a>
+            </div>
+        </div>
+
+        <div class="authHeading"><h>Sign Up - Organization</h></div>
+
+        <form class="signUpOrgContainer">
+            <div class="h">Join with us!</div><br><br>
+
+                <div class="col">
+                    <fieldset>
+
+                        <legend>Organization Details</legend>
+
+                        <label for="orgName">Organization Name<span class="reqStar">*</span></label>
+                        <input id="orgName" type="text" required>
+
+                        <label for="crn">Company Registration Number (CRN)<span class="reqStar">*</span></label>
+                        <input id="crn" type="text" required>
+
+                        <label for="orgEmail">Organization Email<span class="reqStar">*</span></label>
+                        <input id="orgEmail" type="text" required>
+
+                        <label for="orgTele">Organization Telephone<span class="reqStar">*</span></label>
+                        <input id="orgTele" type="text" required>
+
+                    </fieldset>
+                </div>
+
+                <div class="midCol"></div>
+
+                <div class="col">
+                    <fieldset>
+                        <legend>Address</legend>
+
+                        <label for="AL1">Address Line 1<span class="reqStar">*</span></label>
+                        <input id="AL1" type="text" required>
+
+                        <label for="AL2">Address Line 2</label>
+                        <input id="AL2" type="text">
+
+                        <label for="strtName">Street Name<span class="reqStar">*</span></label>
+                        <input id="strtName" type="text" required>
+
+                        <label for="city">City<span class="reqStar">*</span></label>
+                        <input id="city" type="text" required>
+                    </fieldset>
+
+                    <div class="haveAcc">Already have an account ? <a class="link" href="../views/home.php">Login</a><br><br>
+                        <a class="link" href="signup_cand.html">Click Here</a>
+                        <i id ="handLeftIcon" class="fas fa-hand-point-left"></i>
+                        to sign up as a candidate
+                    </div>
+
+                </div>
+
+                <div class="midCol"></div>
+                
+                <div class="col">
+
+                    <fieldset>
+                        <legend>Account Details</legend>
+
+                        <label for="uname">Username<span class="reqStar">*</span></label>
+                        <input id="uname" type="text" required>
+
+                        <label for="pwd">Password<span class="reqStar">*</span> <div class="tooltip"><span><i id="infoIcon" class="fas fa-info-circle"></i></span><span class="tooltipText">Your password should contain:<br>&nbsp;&nbsp; - At least 8 characters<br>&nbsp;&nbsp; - At least one number or a <br>&nbsp;&nbsp;&nbsp;special character(!@#$%^)</span></div></label>
+                        <input id="pwd" type="password" required>
+
+                        <label for="confPwd">Confirm Password<span class="reqStar">*</span></label>
+                        <input id="confPwd" type="password" required>
+
+                    </fieldset>
+
+                    <button class="signupButton" type="submit">SIGN UP</button>
+                </div>
+                
+                
+
+        </form>
+    </body>
+
+</html>
