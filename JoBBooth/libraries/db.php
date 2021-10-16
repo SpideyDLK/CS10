@@ -4,7 +4,7 @@ class db{
     private $host = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $dbname = 'users';
+    private $dbname = 'jobbooth';
 
     private $dbh;
     private $stmt;

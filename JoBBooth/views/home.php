@@ -1,6 +1,23 @@
 <?php
 session_start();
 include_once '../helpers/session_helper.php';
+if(isset($_SESSION['username'])){
+    switch($_SESSION['userRole']){
+        case 'Organization':
+            redirect("../views/org_home.php");
+            break;
+        case 'Candidate':
+            redirect("../views/cand_home.php");
+            break;
+        case 'Interviewer':
+            redirect("../views/interviewer_home.php");
+            break;
+        case 'Recruiter':
+            redirect("../views/rec_home.php");
+            break;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +48,6 @@ include_once '../helpers/session_helper.php';
             <h>Login</h>
             <form class="loginForm" method = "post" action = "../controllers/userController.php">
             <input type="hidden" name="type" value="login">
-
-                <div class="select-wrapper">
-                    <div class="select">
-                        <div class="select__trigger"><span>Login as:</span>
-                            <div class="arrow"></div>
-                        </div>
-                        <div class="custom-options">
-                            <span class="custom-option selected default" id="default" data-value="loginas">Login as:</span>
-                            <span class="custom-option" data-value="org">Organization</span>
-                            <span class="custom-option" data-value="can">Candidate</span>
-                            <span class="custom-option" data-value="rec">Recruiter</span>
-                            <span class="custom-option" data-value="inter">Interviewer</span>
-                        </div>
-                    </div>
-                </div>
                 <br>
 
                 <i id="userIcon" class="fas fa-user"></i>
@@ -55,21 +57,24 @@ include_once '../helpers/session_helper.php';
                 <input id="pwd" name="pwd" class="password" type="password" placeholder="Password" required>
                 <i id="eyeIcon" class="fas fa-eye-slash"></i>
                 <br><br>
-                <?php if(popUp('login')){
+                <?php if(popUp('loginRed')){
                     echo '<script>
                     document.getElementById("userIcon").style.color = "red";
                     document.getElementById("passIcon").style.color = "red";
                     document.getElementById("uname").style.borderColor = "red";
                     document.getElementById("pwd").style.borderColor = "red";
                     </script>';
-                } ?>
+                    
+                }
+                popUp('loginGreen');
+                ?>
                 <br>
                 <i id="keyIcon" class="fas fa-key fa-am"></i>
-                <a class="fp" href="forgotP.html">Forgot password?</a>
+                <a class="fp" href="forgot_pwd.html">Forgot password?</a>
                 <br><br><br>
                 <button type="submit">LOGIN</button>
                 <br><br>
-                <a>New to JoBBooth? </a><br> <a class="su" href="signup_cand.html">Sign Up as a Candidate</a> <br> <a class="su" href="signup_org.html">Sign Up as an Organization</a>
+                <a>New to JoBBooth? </a><br> <a class="su" href="signup_cand.php">Sign Up as a Candidate</a> <br> <a class="su" href="signup_org.php">Sign Up as an Organization</a>
 
             </form>
         </div>
