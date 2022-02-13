@@ -10,7 +10,7 @@ class userController{
         $this->userM = new userModel;
     }
 
-    public function orgSignup(){
+    public function OrgSignup(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $filtered_phone_no = trim($_POST['orgTele']);
@@ -20,6 +20,7 @@ class userController{
         $data =[
             'name'=>trim($_POST['orgName']),
             'crn' => trim($_POST['crn']),
+            'compWeb' => trim($_POST['orgweb']),
             'email' => trim($_POST['orgEmail']),
             'tele' => $filtered_phone_no,
             'AL1' => trim($_POST['orgAL1']),
@@ -32,54 +33,10 @@ class userController{
             'userRole' => trim('organization')
         ];
 
-        if($this->userM->findCRN($data['crn'],$data['userRole'])){
-            popUp("signupRed", "This CRN is already registered!");
-            redirect("../views/signup_org.php");
-        }
-
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
-            popUp("signupRed", "Invalid email!");
-            redirect("../views/signup_org.php");
-        }
-
-        if(!preg_match("/^[0-9]*$/", $data['tele'])||strlen($data['tele'])!==10){
-            popUp("signupRed", "Invalid telephone number!");
-            redirect("../views/signup_org.php");
-        }
-
-        if(!preg_match("/^[a-zA-Z0-9]*$/", $data['uName'])){
-            popUp("signupRed", "Invalid username!");
-            redirect("../views/signup_org.php");
-        }
-
-        if($this->userM->findUser($data['uName'])){
-            popUp("signupRed", "Username is already taken!");
-            redirect("../views/signup_org.php");
-        }
         
-        $ifNumber = preg_match('@[0-9]@',$data['pwd']);
-        $ifSpecialChar = preg_match('@[^\w]@',$data['pwd']);
-
-        if(strlen($data['pwd']) < 8){
-            popUp("signupRed", "Password should contain minimum 8 characters!");
-            redirect("../views/signup_org.php");
-        }elseif($ifNumber||$ifSpecialChar){
-            if($data['pwd'] !== $data['confPwd']){
-                popUp("signupRed", "Passwords don't match!");
-                redirect("../views/signup_org.php");
-            }
-        }
-        else{
-            popUp("signupRed", "Password should contain at least one number or a special character!");
-            redirect("../views/signup_org.php");
-        }
-
-        
-        
-
         $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
 
-        if($this->userM->orgSignup($data)){
+        if($this->userM->OrgSignup($data)){
             popUp("loginGreen", "Successfully Registered!");
             redirect("../views/home.php");
         }else{
@@ -98,65 +55,94 @@ class userController{
         $data =[
             'fname'=>trim($_POST['candFname']),
             'lname' => trim($_POST['candLname']),
+            'district' => trim($_POST['district']),
+            'city' => trim($_POST['city']),
             'email' => trim($_POST['candEmail']),
             'contact' => $filtered_phone_no,
-            'jobPos' => trim($_POST['jobPos']),
             'eduLevel' => trim($_POST['eduLevel']),
+            'uni' => trim($_POST['uniOrInstitute']),
+            'degTitle' => trim($_POST['degreeTitle']),
+            'workEx' => trim($_POST['workEx']),
+            'currComp' => trim($_POST['currComp']),
+            'currJob' => trim($_POST['currJob']),
             'uName' => trim($_POST['candUname']),
             'pwd' => trim($_POST['candPwd']),
             'confPwd' => trim($_POST['candConfPwd']),
             'userRole' => trim('candidate')
         ];
-
-        if($this->userM->findEmail($data['email'],$data['userRole'])){
-            popUp("signupRed", "This e-mail is already registered!");
-            redirect("../views/signup_cand.php");
+        $typeOfLoe = trim($_POST['typeOfLoe']);
+        switch($typeOfLoe){
+            case "3":
+                $typeOfLoe = "cert";
+                break;
+            case "4":
+                $typeOfLoe = "diploma";
+                break;
+            case "5":
+                $typeOfLoe = "undergraduate";
+                break;
+            case "6":
+                $typeOfLoe = "undergraduate";
+                break;
+            case "7":
+                $typeOfLoe = "postgradDip";
+                break;
+            case "8":
+                $typeOfLoe = "masters";
+                break;
+            case "9":
+                $typeOfLoe = "mphilPhd";
+                break;
         }
-
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
-            popUp("signupRed", "Invalid email!");
-            redirect("../views/signup_cand.php");
-        }
-
-        if(!preg_match("/^[0-9]*$/", $data['contact'])||strlen($data['contact'])!==10){
-            popUp("signupRed", "Invalid contact number!");
-            redirect("../views/signup_cand.php");
-        }
-        if($data['eduLevel']==''){
-            popUp("signupRed", "Please select your level of education!");
-            redirect("../views/signup_cand.php");
-        }
-
-        if(!preg_match("/^[a-zA-Z0-9]*$/", $data['uName'])){
-            popUp("signupRed", "Invalid username!");
-            redirect("../views/signup_cand.php");
-        }
-
-        if($this->userM->findUser($data['uName'])){
-            popUp("signupRed", "Username is already taken!");
-            redirect("../views/signup_cand.php");
+        function ucword($word){
+            return strtoupper($word[0]) . substr($word, 1);
         }
         
-        $ifNumber = preg_match('@[0-9]@',$data['pwd']);
-        $ifSpecialChar = preg_match('@[^\w]@',$data['pwd']);
-
-        if(strlen($data['pwd']) < 8){
-            popUp("signupRed", "Password should contain minimum 8 characters!");
-            redirect("../views/signup_cand.php");
-        }elseif($ifNumber||$ifSpecialChar){
-            if($data['pwd'] !== $data['confPwd']){
-                popUp("signupRed", "Passwords don't match!");
-                redirect("../views/signup_cand.php");
+        function ucwordss($str, $exceptions) {
+            // $str = strtolower($str);
+            $words = explode(" ", $str);
+            $out = [];
+            foreach ($words as $word) {
+                array_push($out,(!in_array($word, $exceptions)) ? ucword($word)  : $word);
             }
-        }
-        else{
-            popUp("signupRed", "Password should contain at least one number or a special character!");
-            redirect("../views/signup_cand.php");
+            $str = join(" ",$out);
+            return $str;
         }
 
         $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
 
-        if($this->userM->candSignup($data)){
+        $excep = array("in","is","to","of","and","about","under","if","upto","till");
+        $data['currComp'] = ucwordss($data['currComp'],$excep);
+        $data['currJob'] = ucwordss($data['currJob'],$excep);
+        $data['uni'] = ucwordss($data['uni'],$excep);
+        $data['degTitle'] = ucwordss($data['degTitle'],$excep);
+
+        $jobPos = array();
+        $skill = array();
+
+        foreach($_POST['jobPos'] as $val){
+            array_push($jobPos,$val);
+        }
+        foreach($_POST['skill'] as $val){
+            array_push($skill,$val);
+        }
+
+        $jobPos = array_unique($jobPos);
+        $skill =  array_unique($skill);
+        
+        if($_FILES['cvInput']['size']!=0){
+            $name = $_FILES['cvInput']['name'];
+            $type = $_FILES['cvInput']['type'];
+            $size = $_FILES['cvInput']['size'];
+            $datafile = file_get_contents($_FILES['cvInput']['tmp_name']); 
+        }else{
+            $name = NULL;
+            $type = NULL;
+            $size = NULL;
+            $datafile = NULL;
+        }
+        
+        if($this->userM->candSignup($data,$jobPos,$skill,$datafile,$name,$type,$size,$typeOfLoe)){
             popUp("loginGreen", "Successfully Registered!");
             redirect("../views/home.php");
         }else{
@@ -184,83 +170,78 @@ class userController{
             'uNameOrg' => trim($_SESSION['username'])
         ];
 
-        if($this->userM->findEmail($data['email'],$data['userRole'])){
-            popUp("signupRed", "This e-mail is already registered!");
-            redirect("../views/reg_interviewer.php");
-        }
-
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
-            popUp("signupRed", "Invalid email!");
-            redirect("../views/reg_interviewer.php");
-        }
-
-        if(!preg_match("/^[0-9]*$/", $data['contact'])||strlen($data['contact'])!==10){
-            popUp("signupRed", "Invalid contact number!");
-            redirect("../views/reg_interviewer.php");
-        }
-
-        if(!preg_match("/^[a-zA-Z0-9]*$/", $data['uName'])){
-            popUp("signupRed", "Invalid username!");
-            redirect("../views/reg_interviewer.php");
-        }
-
-        if($this->userM->findUser($data['uName'])){
-            popUp("signupRed", "Username is already taken!");
-            redirect("../views/reg_interviewer.php");
-        }
-        
-        $ifNumber = preg_match('@[0-9]@',$data['pwd']);
-        $ifSpecialChar = preg_match('@[^\w]@',$data['pwd']);
-
-        if(strlen($data['pwd']) < 8){
-            popUp("signupRed", "Password should contain minimum 8 characters!");
-            redirect("../views/reg_interviewer.php");
-        }elseif($ifNumber||$ifSpecialChar){
-            if($data['pwd'] !== $data['confPwd']){
-                popUp("signupRed", "Passwords don't match!");
-                redirect("../views/reg_interviewer.php");
-            }
-        }
-        else{
-            popUp("signupRed", "Password should contain at least one number or a special character!");
-            redirect("../views/reg_interviewer.php");
-        }
-
         $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
 
         if($this->userM->intSignup($data)){
-            redirect("../views/home.php");
+            popUp("loginGreen", "Successfully Registered!");
+            redirect("../views/interviewers.php");
         }else{
             die("Something went wrong");
         }
 
     }
 
-    public function login(){
+    public function signupAdmin(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $data =[
-            'uname'=>trim($_POST['un']),
+            'uname' => trim($_POST['uname']),
             'pwd' => trim($_POST['pwd'])
         ];
 
-        if($this->userM->findUser($data['uname'])){
-            $userLoggedIn = $this->userM->validatePWD($data['uname'],$data['pwd']);
-            $fName = $this->userM->findFName($data['uname']);
+        $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
 
-            if($userLoggedIn){
-                $this->createSession($userLoggedIn,$fName);
-            }
-            else{
-                popUp("loginRed", "Incorrect username or password!");
-                redirect("../views/home.php");
-            }
+        if($this->userM->signupAdmin($data)){
+            popUp("loginGreen", "Successfully Registered!");
+            redirect("../views/login_admin.php");
+        }else{
+            die("Something went wrong");
         }
-        else{
-            popUp("loginRed", "Incorrect username or password!");
+
+    }
+
+    public function recSignup(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $filtered_phone_no = trim($_POST['AgencyContact']);
+        $filtered_phone_no = preg_replace("/[^0-9]/", '', $filtered_phone_no);
+        if (strlen($filtered_phone_no) == 11) $filtered_phone_no = preg_replace("/^94/", '0',$filtered_phone_no);
+
+        $data =[
+            'name'=>trim($_POST['agencyName']),
+            'regNo' => trim($_POST['agencyRegNo']),
+            'email' => trim($_POST['agencyEmail']),
+            'contact' => $filtered_phone_no,
+            'uName' => trim($_POST['recUname']),
+            'workexperience' => trim($_POST['workexperience']),
+            'pwd' => trim($_POST['recPwd']),
+            'confPwd' => trim($_POST['recConfPwd']),
+            'userRole' => trim('recruiter')
+        ];
+
+       
+
+        $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
+
+
+        $area = array();
+
+        foreach($_POST['speArea'] as $val){
+            array_push($area,$val);
+        }
+        
+
+        $area = array_unique($area);
+
+        if($this->userM->recSignup($data,$area)){
+            popUp("loginGreen", "Successfully Registered!");
             redirect("../views/home.php");
+        }else{
+            die("Something went wrong");
         }
     }
+
+    
 
     public function addJobPos(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -274,6 +255,7 @@ class userController{
         }
         
         if($this->userM->addJobPos($data)){
+            popUp("loginGreen", "Job Positions Added Successfully!");
             redirect("../views/home.php");
         }else{
             die("Something went wrong");
@@ -291,6 +273,7 @@ class userController{
         }
         
         if($this->userM->addSpecialAreaRec($data)){
+            popUp("loginGreen", "Specialization Areas Added Successfully!");
             redirect("../views/home.php");
         }else{
             die("Something went wrong");
@@ -302,15 +285,243 @@ class userController{
 
         $data =[
             'adTitle'=>trim($_POST['adTitle']),
-            'desc' => trim($_POST['descPubAd']),
-            'jobTitle' => trim($_POST['jobTitlePubAd']),
-            'freq' => trim($_POST['payFreq']),
-            'amount' => trim($_POST['amountPubAd']),
-            'uName' => trim($_SESSION['username'])
+            'jobPos' => trim($_POST['jobPos']),
+            'jobType' => trim($_POST['jobType']),
+            'sal' => trim($_POST['sal']),
+            'freq' => trim($_POST['salFreq']),
+            'adDuration' => trim($_POST['adDuration']),
+            'desc' => trim($_POST['desc']),
+            'skills' => trim($_POST['skills']),
+            'fromDate' => date("Y-m-d"),
+            'orgUname' => $_SESSION['username']
         ];
 
-        if($this->userM->publishAd($data)){
-            redirect("../views/home.php");
+        if($_FILES['flyerUpload']['size']!=0){
+            $name = $_FILES['flyerUpload']['name'];
+            $type = $_FILES['flyerUpload']['type'];
+            $size = $_FILES['flyerUpload']['size'];
+            $datafile = file_get_contents($_FILES['flyerUpload']['tmp_name']); 
+        }else{
+            $name = NULL;
+            $type = NULL;
+            $size = NULL;
+            $datafile = NULL;
+        }
+
+        if($this->userM->publishAd($data,$name,$type,$size,$datafile)){
+            // popUp("loginGreen", "Advertisement Published!");
+            redirect("../views/ads.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function editAd(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'refNo'=>trim($_POST['refNo']),
+            'adTitle'=>trim($_POST['adTitle']),
+            'jobPos' => trim($_POST['jobPos']),
+            'jobType' => trim($_POST['jobType']),
+            'sal' => trim($_POST['sal']),
+            'freq' => trim($_POST['salFreq']),
+            'adDuration' => trim($_POST['adDuration']),
+            'desc' => trim($_POST['desc']),
+            'skills' => trim($_POST['skills'])
+        ];
+
+        if($_FILES['flyerUpload']['size']!=0){
+            $name = $_FILES['flyerUpload']['name'];
+            $type = $_FILES['flyerUpload']['type'];
+            $size = $_FILES['flyerUpload']['size'];
+            $datafile = file_get_contents($_FILES['flyerUpload']['tmp_name']); 
+        }else{
+            $name = NULL;
+            $type = NULL;
+            $size = NULL;
+            $datafile = NULL;
+        }
+
+        if($this->userM->editAd($data,$name,$type,$size,$datafile)){
+            redirect("../views/ads.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function applyForJob(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data = [
+            'uname' => trim($_POST['candUname']),
+            'refNo' => trim($_POST['refNo'])
+        ];
+        if($this->userM->applyForJob($data)){
+            $_SESSION['refNo'] = $data['refNo'];
+            redirect("../views/view_ad_cand.php");
+        }else{
+            die("Something went wrong");
+        }
+
+    }
+
+    public function hireRec(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data = [
+            'recUname' => trim($_POST['recUname']),
+            'hireRecDesc' => trim($_POST['hireRecDesc']),
+            'date' => date("Y-m-d"),
+            'orgUname' => $_SESSION['username']
+        ];
+
+        if($this->userM->hireRec($data)){
+            redirect("../views/hire_rec.php");
+        }else{
+            die("Something went wrong");
+        }
+
+    }
+
+
+    public function orgSendJobReqCand(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'jobPos'=>trim($_POST['jobPos']),
+            'jobType' => trim($_POST['jobType']),
+            'salary' => trim($_POST['sal']),
+            'freq' => trim($_POST['salFreq']),
+            'desc' => trim($_POST['desc']),
+            'orgUname' => trim($_SESSION['username']),
+            'date' => date("Y-m-d"),
+            'candUname' => trim($_POST['candUname'])
+        ];
+
+        if($this->userM->orgSendJobReqCand($data)){
+            $_SESSION['candUname'] = $data['candUname'];
+            redirect("../views/view_cand_org.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function reportCand(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'sub'=>trim($_POST['sub']),
+            'desc' => trim($_POST['reportDesc']),
+            'orgUname' => trim($_SESSION['username']),
+            'candUname' => trim($_POST['candUname']),
+            'date' => date("Y-m-d")
+        ];
+
+        if($this->userM->reportCand($data)){
+            $_SESSION['candUname'] = $data['candUname'];
+            redirect("../views/view_cand_org.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function orgCancelJobReqCand(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'orgUname' => trim($_SESSION['username']),
+            'candUname' => trim($_POST['candUname'])
+        ];
+
+        if($this->userM->orgCancelJobReqCand($data)){
+            $_SESSION['candUname'] = $data['candUname'];
+            redirect("../views/view_cand_org.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function scheIntOrg(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'date' => trim($_POST['intScheDate']),
+            'time' => trim($_POST['intScheTime']),
+            'link' => trim($_POST['intLink']),
+            'intUname' => trim($_POST['selectInt']),
+            'candUname' => trim($_POST['candUname']),
+            'orgUname' => trim($_SESSION['username'])
+        ];
+
+        if($this->userM->scheIntOrg($data)){
+            $_SESSION['candUname'] = $data['candUname'];
+            redirect("../views/view_responded_cand_org.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function rescheIntOrg(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'refNo' => trim($_POST['refNo']),
+            'date' => trim($_POST['intScheDate']),
+            'time' => trim($_POST['intScheTime']),
+            'link' => trim($_POST['intLink']),
+            'intUname' => trim($_POST['selectInt'])
+        ];
+
+        if($this->userM->rescheIntOrg($data)){
+            // $_SESSION['candUname'] = $data['candUname'];
+            redirect("../views/interviewers.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function rescheIntCand(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'refNo' => trim($_POST['refNo']),
+            'date1' => trim($_POST['date1']),
+            'time1' => trim($_POST['time1']),
+            'date2' => trim($_POST['date2']),
+            'time2' => trim($_POST['time2']),
+            'date3' => trim($_POST['date3']),
+            'time3' => trim($_POST['time3']),
+            'date4' => trim($_POST['date4']),
+            'time4' => trim($_POST['time4']),
+            'date5' => trim($_POST['date5']),
+            'time5' => trim($_POST['time5']),
+        ];
+
+        if($this->userM->rescheIntCand($data)){
+            // $_SESSION['candUname'] = $data['candUname'];
+            popUp("loginGreen", "Request Sent");
+            redirect("../views/interviews_cand.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function unpublishAd(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $refNo = trim($_POST['refNo']);
+
+        if($this->userM->unpublishAd($refNo)){
+            redirect("../views/ads.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function republishAd(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $refNo = trim($_POST['refNo']);
+        $fromDate = date("Y-m-d");
+
+        if($this->userM->republishAd($refNo,$fromDate)){
+            redirect("../views/ads.php");
         }else{
             die("Something went wrong");
         }
@@ -320,7 +531,7 @@ class userController{
         unset($_SESSION['searchRes']);
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $searchTerm = $_POST['searchTerm'];
+        $searchTerm = trim($_POST['searchTerm']);
 
         $rows = $this->userM->searchAd($searchTerm);
         $empty_row = [];
@@ -333,6 +544,48 @@ class userController{
         }
 
     }
+    // public function searchCand(){
+    //     unset($_SESSION['searchRes']);
+    //     unset($_SESSION['candJobPos']);
+    //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    //     $searchTerm = trim($_POST['searchTerm']);
+
+    //     $rows = $this->userM->searchCand($searchTerm);
+    //     $rows2 = $this->userM->searchJobPos();
+
+    //     $empty_row = [];
+    //     if(!($rows)){
+    //         $_SESSION['searchRes'] = $empty_row;
+    //         redirect("../views/home.php");
+    //     }else{
+    //         $_SESSION['searchRes'] = $rows;
+    //         $_SESSION['candJobPos'] = $rows2;
+    //         redirect("../views/home.php");
+    //     }
+
+    // }
+    public function searchCandRec(){
+        unset($_SESSION['searchRes']);
+        unset($_SESSION['candJobPos']);
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $searchTerm = trim($_POST['searchTerm']);
+
+        $rows = $this->userM->searchCand($searchTerm);
+        $rows2 = $this->userM->searchJobPos();
+
+        $empty_row = [];
+        if(!($rows)){
+            $_SESSION['searchRes'] = $empty_row;
+            redirect("../views/rec_search_cand.php");
+        }else{
+            $_SESSION['searchRes'] = $rows;
+            $_SESSION['candJobPos'] = $rows2;
+            redirect("../views/rec_search_cand.php");
+        }
+
+    }
 
     public function searchRec(){
         unset($_SESSION['searchResRec']);
@@ -341,28 +594,30 @@ class userController{
         $searchTerm = $_POST['searchTerm'];
 
         $rows = $this->userM->searchRec($searchTerm);
+        $rows2 = $this->userM->searchSpecArea();
         $empty_row = [];
         if(!($rows)){
             $_SESSION['searchResRec'] = $empty_row;
             redirect("../views/hire_rec.php");
         }else{
             $_SESSION['searchResRec'] = $rows;
+            $_SESSION['searchResRecSpecAreas'] = $rows2;
             redirect("../views/hire_rec.php");
         }
 
     }
 
-    public function viewMyAds(){
-        $rows = $this->userM->viewMyAds($_SESSION['username']);
-        $empty_row = [];
-        if(!($rows)){
-            $_SESSION['myAds'] = $empty_row;
-            redirect("../views/myAds.php");
-        }else{
-            $_SESSION['myAds'] = $rows;
-            redirect("../views/myAds.php");
-        }
-    }
+    // public function viewMyAds(){
+    //     $rows = $this->userM->viewMyAds($_SESSION['username']);
+    //     $empty_row = [];
+    //     if(!($rows)){
+    //         $_SESSION['myAds'] = $empty_row;
+    //         redirect("../views/ads.php");
+    //     }else{
+    //         $_SESSION['myAds'] = $rows;
+    //         redirect("../views/ads.php");
+    //     }
+    // }
 
     public function loadJobReq(){
         $rows = $this->userM->loadJobReq($_SESSION['username']);
@@ -376,15 +631,137 @@ class userController{
         }
     }
 
-    public function viewIntList(){
-        $rows = $this->userM->viewIntList($_SESSION['username']);
+    public function editProfileCand(){
+        $name = $_FILES['proPic']['name'];
+        $type = $_FILES['proPic']['type'];
+        $data = file_get_contents($_FILES['proPic']['tmp_name']);
+
+        if($this->userM->editProfileCand($name,$type,$data)){
+            redirect("../views/home.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function editProCandViewData(){
+        $rows = $this->userM->editProCandViewData();
         $empty_row = [];
         if(!($rows)){
-            $_SESSION['intList'] = $empty_row;
-            redirect("../views/view_interviewers_org.php");
+            $_SESSION['proPic'] = $empty_row;
+            redirect("../views/cand_edit_pro.php");
         }else{
-            $_SESSION['intList'] = $rows;
-            redirect("../views/view_interviewers_org.php");
+            $_SESSION['proPic'] = $rows;
+            redirect("../views/cand_edit_pro.php");
+        }
+    }
+
+    public function removeInter(){
+        $uname = $_GET['uname'];
+
+        if($this->userM->removeInter($uname)){
+            popUp("loginGreen", "Interviewer Removed");
+            redirect("../views/interviewers.php");
+        }else{
+            die("Something went wrong");
+        }
+        
+    }
+
+    public function candAcceptOrgReq(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $id = trim($_POST['id']);
+    
+            if($this->userM->candAcceptOrgReq($id)){
+                redirect("../views/respond_req_cand.php?id=".$id);
+            }else{
+                die("Something went wrong");
+            }
+    }
+    public function candDeclineOrgReq(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $id = trim($_POST['id']);
+    
+            if($this->userM->candDeclineOrgReq($id)){
+                redirect("../views/respond_req_cand.php?id=".$id);
+            }else{
+                die("Something went wrong");
+            }
+    }
+
+    
+
+    // public function viewIntList(){
+    //     $rows = $this->userM->viewIntList($_SESSION['username']);
+    //     $empty_row = [];
+    //     if(!($rows)){
+    //         $_SESSION['intList'] = $empty_row;
+    //         redirect("../views/view_interviewers_org.php");
+    //     }else{
+    //         $_SESSION['intList'] = $rows;
+    //         redirect("../views/view_interviewers_org.php");
+    //     }
+    // }
+
+    
+    
+    public function login(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'uname'=>trim($_POST['un']),
+            'pwd' => trim($_POST['pwd'])
+        ];
+
+        if($this->userM->checkAccountStatus($data['uname'])){
+            
+        }
+        if($this->userM->findUser($data['uname'])){
+            if($this->userM->checkAccountStatus($data['uname'])){
+                $userLoggedIn = $this->userM->validatePWD($data['uname'],$data['pwd']);
+                $fName = $this->userM->findFName($data['uname']);
+
+                if($userLoggedIn){
+                    $this->createSession($userLoggedIn,$fName);
+                }
+                else{
+                    popUp("loginRed", "Incorrect username or password!");
+                    redirect("../views/home.php");
+                }
+            }
+            else{
+                popUp("loginRed", "Your account has been suspended!");
+                redirect("../views/home.php");
+            }
+        }
+        else{
+            popUp("loginRed", "Incorrect username or password!");
+            redirect("../views/home.php");
+        }
+    }
+    public function loginAdmin(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
+        $data =[
+            'uname'=>trim($_POST['un']),
+            'pwd' => trim($_POST['pwd'])
+        ];
+
+        if($this->userM->findAdmin($data['uname'])){
+            $userLoggedIn = $this->userM->validatePWDAdmin($data['uname'],$data['pwd']);
+
+            if($userLoggedIn){
+                $_SESSION['username'] = $userLoggedIn->username;
+                $_SESSION['userRole'] = "Administrator";
+                redirect("../views/admin_home.php");
+            }
+            else{
+                popUp("loginRed", "Incorrect username or password!");
+                redirect("../views/login_admin.php");
+            }
+        }
+        else{
+            popUp("loginRed", "Incorrect username or password!");
+            redirect("../views/login_admin.php");
         }
     }
 
@@ -411,6 +788,8 @@ class userController{
         
     }
 
+    
+
     public function logout(){
         unset($_SESSION['username']);
         session_destroy();
@@ -426,11 +805,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'login':
             $init->login();
             break;
+        case 'loginAdmin':
+            $init->loginAdmin();
+            break;
         case 'signupOrg':
-            $init->orgSignup();
+            $init->OrgSignup();
             break;
         case 'signupCand':
             $init->candSignup();
+            break;
+        case 'signupRec':
+            $init->recSignup();
             break;
         case 'addJobPos':
             $init->addJobPos();
@@ -438,10 +823,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'searchAd':
             $init->searchAd();
             break;
+        // case 'searchCand':
+        //     $init->searchCand();
+        //     break;
+        case 'searchCandRec':
+            $init->searchCandRec();
+            break;
         case 'signupInt':
             $init->intSignup();
             break;
-        case 'publishAd':
+        case 'pubAd':
             $init->publishAd();
             break;
         case 'searchRec':
@@ -449,6 +840,51 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             break;
         case 'addSpecialAreaRec':
             $init->addSpecialAreaRec();
+            break;
+        case 'editProfileCand':
+            $init->editProfileCand();
+            break;
+        case 'orgSendJobReqCand':
+            $init->orgSendJobReqCand();
+            break;
+        case 'orgCancelJobReqCand':
+            $init->orgCancelJobReqCand();
+            break;
+        case 'unpublishAd':
+            $init->unpublishAd();
+            break;
+        case 'republishAd':
+            $init->republishAd();
+            break;
+        case 'editAd':
+            $init->editAd();
+            break;
+        case 'reportCand':
+            $init->reportCand();
+            break;
+        case 'signupAdmin':
+            $init->signupAdmin();
+            break;
+        case 'candAcceptOrgReq':
+            $init->candAcceptOrgReq();
+            break;
+        case 'candDeclineOrgReq':
+            $init->candDeclineOrgReq();
+            break;
+        case 'applyForJob':
+            $init->applyForJob();
+            break;
+        case 'hireRec':
+            $init->hireRec();
+            break;
+        case 'scheIntOrg':
+            $init->scheIntOrg();
+            break;
+        case 'rescheIntOrg':
+            $init->rescheIntOrg();
+            break;
+        case 'rescheIntCand':
+            $init->rescheIntCand();
             break;
         default:
         redirect("../views/home.php");
@@ -459,14 +895,20 @@ else{
         case 'logout':
             $init->logout();
             break;
-        case 'myAds':
-            $init->viewMyAds();
-            break;
         case 'intList':
             $init->viewIntList();
             break;
         case 'loadJobReq':
             $init->loadJobReq();
+            break;
+        case 'editProCandViewData':
+            $init->editProCandViewData();
+            break;
+        case 'checkCandDupEmail':
+            $init->checkCandDupEmail();
+            break;
+        case 'removeInter':
+            $init->removeInter();
             break;
         default:
         redirect("../views/home.php");

@@ -14,6 +14,7 @@ if(!isset($_SESSION['username'])){
         <link rel="stylesheet" href="style.css">
         <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
         <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
@@ -32,19 +33,52 @@ if(!isset($_SESSION['username'])){
         <div class="authHeading"><h>Hire Recruiters</h></div>
 
         <div class="searchRec">
-            <form action="../controllers/userController.php" method="post">
-              <input type="hidden" name="type" value="searchRec">
-                <input class="searchBar" type="text" name="searchTerm" placeholder="Search for a recruiter..." required> <span class="searchIconHireRec"><i id="searchIconHireRec" class="fas fa-search"></i></span>
-                <button class="searchButtonHireRec" type="submit">SEARCH</button>
-            </form> 
+                <!-- <input type="hidden" name="type" value="searchCand"> -->
+                <input class="searchBarRec" autocomplete="off" id="searchBar" name="searchTerm" type="text" placeholder="Filter by entering a specialization area..." required>
+                <div class="result" id="res"></div>
+                <div class="trendySearches">
+                <p class="trendyJobs"></p>
+                <p class="trendySkills"></p>
+                </div>
         </div>
 
-        <?php if(isset($_SESSION['searchResRec'])){
-            printTableRec($_SESSION['searchResRec']);
-            }
-            ?>
+        <div class="hireRecTableCont">
+
+        </div>
+        <div class="hireRecForm" id="hireRecForm">
+                <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+                <i id="closeBtnForm" class="far fa-times-circle"></i>
+                <input type="hidden" name="type" value="hireRec">
+                <input type="hidden" id ="recUname" name="recUname" value="">
+                <label for="hireRecDesc">Description<span class="reqStar">*</span></label>
+                <textarea id="hireRecDesc" name="hireRecDesc" type="text" form="form-container" placeholder="Describe the required service in-detail..." required></textarea>
+                <button  type="submit">SEND REQUEST</button>
+                </form>
+        </div>
+
+        
         
     
+        <script>
+            $( document ).ready(function() {
+            var recs = $(".hireRecTableCont");
+            
+            $.get("../controllers/searchDataController.php?q=viewAllRecs", {}).done(function(data){
+                recs.html(data);     
+            });
+            
+            
+            });
+
+            $(".searchBarRec").on("keyup",function(){
+                var searchTerm = $(".searchBarRec").val();
+                var recs = $(".hireRecTableCont");
+                
+                $.get("../controllers/searchDataController.php?q=viewFilteredRecs", {searchTerm:searchTerm}).done(function(data){
+                recs.html(data);     
+            });
+            });
+        </script>
     
     </body>
 </html>

@@ -56,7 +56,7 @@ function printTableRec($rows){
         <td>'.$rows[$x]->email.'</td>
         <td>'.$rows[$x]->contact_no.'</td>
         <td>'.$rows[$x]->average_rating.'</td>
-        <td><a href="#">Hire</a></td>
+        <td><a href="view_rec_org.php?recNo='.$x.'">View</a></td>
       </tr>';
     }
     echo '</table> </div>';
@@ -65,58 +65,58 @@ function printTableRec($rows){
     
 }
 
-function viewMyAds($rows){
-    if(count($rows)==0){
-        echo '<div align="center"><i>No ads to show</i></div>';
-    }
-    else{
-        echo '<div class="myAds">
-        <table class="myAdsTable">
-            <tr>
-              <th>Ref. No.</th>
-              <th>Title</th>
-              <th></th>
-              <th></th>
-            </tr>';
-        for($x=0 ; $x<count($rows) ; $x++){
-        echo '<tr>
-        <td>'.$rows[$x]->ref_no.'</td>
-        <td>'.$rows[$x]->ad_title.'</td>
-        <td><a href="#">Edit</a></td>
-        <td><a href="">Unpublish</a></td>
-        </tr>';
+// function viewMyAds($rows){
+//     if(count($rows)==0){
+//         echo '<div align="center"><i>No ads to show</i></div>';
+//     }
+//     else{
+//         echo '<div class="myAds">
+//         <table class="myAdsTable">
+//             <tr>
+//               <th>Ref. No.</th>
+//               <th>Title</th>
+//               <th></th>
+//               <th></th>
+//             </tr>';
+//         for($x=0 ; $x<count($rows) ; $x++){
+//         echo '<tr>
+//         <td>'.$rows[$x]->ref_no.'</td>
+//         <td>'.$rows[$x]->ad_title.'</td>
+//         <td><a href="#">Edit</a></td>
+//         <td><a href="">Unpublish</a></td>
+//         </tr>';
         
-    }
-    echo '</table> </div>';
-    }
-}
+//     }
+//     echo '</table> </div>';
+//     }
+// }
 
-function viewIntList($rows){
-    if(count($rows)==0){
-        echo '<div align="center"><i>No interviewers registered</i></div>';
-    }
-    else{
-        echo '<div class="intList">
-        <table class="intListTable">
-            <tr>
-              <th>Name</th>
-              <th>NIC</th>
-              <th>Email</th>
-              <th>Contact No.</th>
-              <th></th>
-            </tr>';
-        for($x=0 ; $x<count($rows) ; $x++){
-        echo '<tr>
-        <td>'.$rows[$x]->name.'</td>
-        <td>'.$rows[$x]->nic.'</td>
-        <td>'.$rows[$x]->email.'</td>
-        <td>'.$rows[$x]->contact_no.'</td>
-        <td><a  href="#">Remove</a></td>
-        </tr>';
-    }
-    echo '</table> </div>';
-    }
-}
+// function viewIntList($rows){
+//     if(count($rows)==0){
+//         echo '<div align="center"><i>No interviewers registered</i></div>';
+//     }
+//     else{
+//         echo '<div class="intList">
+//         <table class="intListTable">
+//             <tr>
+//               <th>Name</th>
+//               <th>NIC</th>
+//               <th>Email</th>
+//               <th>Contact No.</th>
+//               <th></th>
+//             </tr>';
+//         for($x=0 ; $x<count($rows) ; $x++){
+//         echo '<tr>
+//         <td>'.$rows[$x]->name.'</td>
+//         <td>'.$rows[$x]->nic.'</td>
+//         <td>'.$rows[$x]->email.'</td>
+//         <td>'.$rows[$x]->contact_no.'</td>
+//         <td><a  href="#">Remove</a></td>
+//         </tr>';
+//     }
+//     echo '</table> </div>';
+//     }
+// }
 
 function loadJobReq($rows){
     if(count($rows)==0){

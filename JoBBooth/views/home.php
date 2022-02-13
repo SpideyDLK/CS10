@@ -15,6 +15,9 @@ if(isset($_SESSION['username'])){
         case 'Recruiter':
             redirect("../views/rec_home.php");
             break;
+        case 'Administrator':
+            redirect("../views/admin_home.php");
+            break;
     }
 }
 
@@ -41,6 +44,7 @@ if(isset($_SESSION['username'])){
             <p1>Welcome to JoBBooth!</p1>
             <p2>JoBBooth is a job finding and recruitment platform with lots of cool features that will make your life easy. This platform is mainly built up to overcome the difficulties faced by job seekers and organizations in the recruitment process.</p2>
             <p3>Join with us to make your job hunting or recruitment so much easier. </p3>
+            <p4>Recruitment agencies can <a href="signup_rec.php"><button class="recJoinHereBtn" type="submit">Join Here !</button></a></p4> 
         </div>
 
         <div class="loginFormContainer">
@@ -70,7 +74,7 @@ if(isset($_SESSION['username'])){
                 ?>
                 <br>
                 <i id="keyIcon" class="fas fa-key fa-am"></i>
-                <a class="fp" href="forgot_pwd.html">Forgot password?</a>
+                <a class="fp" href="reset_password.php">Forgot password?</a>
                 <br><br><br>
                 <button type="submit">LOGIN</button>
                 <br><br>

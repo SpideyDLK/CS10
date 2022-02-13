@@ -14,6 +14,15 @@ if(!isset($_SESSION['username'])){
         <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
         <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+          function openForm() {
+            document.getElementById("myForm").style.display = "block";
+          }
+
+          function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+          }
+        </script>
     </head>
 
     <body class="candHome">
@@ -40,13 +49,18 @@ if(!isset($_SESSION['username'])){
                 <h><?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
                   }?></h>
-                <h class="logOut"><a  href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i> Logout</a></h>
+                  <div class="moreDropDown">
+                  <div class="moreBtn"><a href=""></a><span class="arrowDownIcon"><i id="userSettingsIcon" class="fas fa-user-cog"></i></span></div>
+                  <div class="moreDropDown-content">
+                        <a href="int_edit_pro.php"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                        <a href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                  </div>
+                  </div>
             </div>
-            <div class="editIconOrg"><a href="#"><i id="editIconOrg" class="far fa-edit"></i></a></div>
         </div>
         
    
-            <div class="intReschReqInter">
+        <div class="intReschReqInter">
                 <div class="jobReqHeading"><h>Interview Reschedule Requests</h></div>
             <div class="pendingJobReqContainer">
                 <table class="pendingJobReq">
@@ -54,87 +68,109 @@ if(!isset($_SESSION['username'])){
                 <tr>
                   <th>Organization Name</th>
                   <th>Candidate's Name</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th></th>
-                  <th></th>
+                  <th>Requested dates & times</th>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
                 <tr>
                   <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
+                  <td>User</td>
+                  <td><a class="view" onclick="openForm()">View</a></td>
                 </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
+                
                 
               </table>
         </div>
         </div>
+
+        <div class="form-popup" id="myForm">
+  <form class="form-container">
+  <table class="pendingJobReq">
+        
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>date_01</td>
+          <td><form>
+          <input type="radio" id="time_01"name="time" value="time_01">
+  <label for="time_011">time_01</label><br>
+  <input type="radio" id="time_02" name="time" value="time_02">
+  <label for="time_02">time_02</label>
+          </form></td>
+          <td><a class="view">Accept</a></td>
+          <td><a class="view">Decline</a></td>
+          </tr>
+          <tr>
+          <td>date_02</td>
+          <td><form>
+          <input type="radio" id="time_01 "name="time" value="time_01">
+  <label for="time_01">time_01</label><br>
+  <input type="radio" id="time_02" name="time" value="time_02">
+  <label for="time_02">time_02</label>
+          </form></td>
+          <td><a class="view">Accept</a></td>
+          <td><a class="view">Decline</a></td>
+          </tr>
+          <tr>
+          <td>date_03</td>
+          <td><form>
+          <input type="radio" id="time_01 "name="time" value="time_01">
+  <label for="time_01">time_01</label><br>
+  <input type="radio" id="time_02" name="time" value="time_02">
+  <label for="time_02">time_02</label>
+          </form></td>
+          <td><a class="view">Accept</a></td>
+          <td><a class="view">Decline</a></td>
+          </tr><tr>
+          <td>date_04</td>
+          <td><form>
+          <input type="radio" id="time_01 "name="time" value="time_01">
+  <label for="time_01">time_01</label><br>
+  <input type="radio" id="time_02" name="time" value="time_02">
+  <label for="time_02">time_02</label>
+          </form></td>
+          <td><a class="view">Accept</a></td>
+          <td><a class="view">Decline</a></td>
+          </tr>
+        
+                </table>
+               </form>
+               <div class="outer">
+        <div id="close" onclick="closeForm()"><i class="fas fa-times-circle"></i></div>
+    </div>
+</div>
 
 
         <div class="pendingIntContainerOuterInter">

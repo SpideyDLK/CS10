@@ -30,7 +30,7 @@ if(!isset($_SESSION['username'])){
             </div>
         </div>
 
-        <div class="candHomeRow1">
+        <div class="orgHomeRow1">
             <div class="welcomeMsg">
                 <h1>Hello, <?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
@@ -44,19 +44,27 @@ if(!isset($_SESSION['username'])){
                   echo $_SESSION['fName'];
                   }?></h>
                   <div class="moreDropDown">
-                  <div class="moreBtn"><a href="">More </a><span class="arrowDownIcon"><i class="fa fa-caret-down"></i></i></span></div>
+                  <div class="moreBtn"><a href=""></a><span class="arrowDownIcon"><i id="userSettingsIcon" class="fas fa-user-cog"></i></span></div>
                   <div class="moreDropDown-content">
-                        <a href="../views/add_more_special_rec.php">Add Specializations</a>
-                        <a href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                        <a href="rec_edit_pro.php"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                        <a href="../views/add_more_special_rec.php"><i class="fas fa-plus-circle"></i> Add Specialized Areas</a>
+                        <a href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                   </div>
                   </div>
                 
             </div>
-            <div class="editIconOrg"><a href="#"><i id="editIconOrg" class="far fa-edit"></i></a></div>
+        </div>
+
+        <div class="functionsOrg">
+
+          <div class="orgNavBar">
+            <a href="rec_view_orgList.php">View Organizations</a>
+            <a href="rec_search_cand.php">Search Candidates</a>
+            <a href="resch_int_req_rec.php">Interview Reschedule Requests</a>
         </div>
         
-   
-
+        <br>
+        <?php popUp('loginGreen');?>
 
         <div class="pendingJobAppContainerOuter">
           <div class="jobAppHeading"><h>Job Requests</h></div>
@@ -65,171 +73,6 @@ if(!isset($_SESSION['username'])){
         }?>
       
       </div>
-
-
-        <div class="pendingJobReqContainerOuter">
-            <div class="jobReqHeading"><h>Organization List</h></div>
-        <div class="pendingJobReqContainer">
-            <table class="pendingJobReq">
-                <tr>
-                    <th>Profile Photo</th>
-                    <th>Organization Name</th>
-                    <th>Description</th>
-                    <th></th>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Description Here</td>
-                  <td><a href="view_cand_list_rec.php">View</a></td>
-                </tr>
-                
-                
-              </table>
-        </div>
-
-        </div>
-        
-
-        <div class="pendingIntContainerOuter">
-            <div class="pendIntHeading"><h>Interview Reschedule Requests</h></div>
-            <div class="pendingIntContainer">
-            <table class="pendingInterviews">
-                <tr>
-                  <th>Organization Name</th>
-                  <th>Candidate's Name</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                <tr>
-                  <td>JoBBooth Inc.</td>
-                  <td>JoBBooth</td>
-                  <td>2022-01-22</td>
-                  <td><input id="time1"  name="time" type="radio"><label for="time1">9.00 AM</label><br><input id="time2" name="time" type="radio"><label for="time2">3.00 PM</label></td>
-                  <td><a href="#">Accept</a></td>
-                  <td><a href="#">Decline</a></td>
-                </tr>
-                
-                
-              </table>
-        </div>
-       
-    
-        </div>
 
 
         <div class="pendinginterContainerOuter">
