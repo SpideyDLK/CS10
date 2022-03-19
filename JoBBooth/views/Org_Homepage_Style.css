@@ -1,0 +1,312 @@
+
+#logo{
+    position: absolute;
+    top:8px;
+    left: 5%;
+    height: 200px;
+    width: 200px;
+    margin-top: -75px;
+}
+.logoBack{
+    
+    width: 100%;
+    height: 60px;
+    background: black;
+    box-shadow: 0 4px 8px 0 rgba(4, 27, 2, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    position: fixed;
+    display: inline-grid;
+}
+
+.logoBack .help a{
+    
+    font-size: 25px;
+    color: lightgreen;
+    position: relative;
+    top: 15px;
+    left: 400px;
+}
+
+.logoBack .contact a{
+    
+    font-size: 25px;
+    color: lightgreen;
+    position: relative;
+    top: -13px;
+    left: 500px;
+}
+
+.logoBack .about a{
+    
+    font-size: 25px;
+    color: lightgreen;
+    position: relative;
+    top: -40px;
+    left: 600px;
+}
+
+/* End of Header */
+
+body{
+    background-image: url(../material/Org_Background_Img.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.orgDescrip{
+    float: left;
+    margin-left: 20px;
+    margin-top: 50px;
+    height: 70px;
+    width: 200px;
+    position:absolute;
+    text-align: center;
+}
+
+.orgDescrip #ProfilePhoto{
+    position: relative;
+    margin-left: 600%;
+    margin-top: -175px;
+    height:100px;
+    width: 100px;
+    text-align: center;
+}
+#ProfilePhoto:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(8, 68, 18);
+}
+
+.orgDescrip #DesUpdate{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 150px;
+    height: 70px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    position: relative;
+    margin-top: 15px;
+    margin-left: 400%;
+    font-weight: bold;
+    font-size: 150%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+}
+#DesUpdate:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(8, 68, 18);
+}
+
+
+hr {
+    border-top: 2px dashed rgb(16, 119, 7);
+  }
+mark {
+    background-color: rgb(35, 221, 35);
+    color: black;
+  }
+
+.Functions{
+    position: relative;
+    margin-top: 300px;
+    margin-left: 10px;
+    width: 100%;
+    
+}
+
+.Functions #ScheduleInterviewbtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    margin-left: 10%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#ScheduleInterviewbtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+
+.Functions #MyAdbtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    position: relative;
+    margin-left: 10%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#MyAdbtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+.Functions #PublishAdbtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    position: relative;
+    margin-left: 10%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#PublishAdbtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+.Functions #HireRecruiterbtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    position: relative;
+    margin-left: 10%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#HireRecruiterbtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+.Functions #HireInterviewerbtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    position: relative;
+    margin-left: 10%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#HireInterviewerbtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+
+.SearchCandidate{
+    position: relative;
+    margin-top: 100px;
+    margin-left: 40px;
+    width: 80%;
+    
+}
+
+#SearchCandidatebtn{
+    border: none;
+    background-color: rgb(13, 223, 142);
+    width: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    color: rgb(16, 143, 16);
+    margin-left: 58%;
+    font-weight: bold;
+    font-size: 130%;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+   
+}
+#SearchCandidatebtn:hover, .icon:hover{
+    box-shadow: 0 0 20px rgb(13, 223, 142);
+    background-color: rgb(30, 240, 11);
+}
+
+.Result p{
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: #1ed31e;
+    font-style: italic;
+    backdrop-filter: blur(10px);
+
+}
+.ResultTable table{
+    position: relative;
+    top: -15px;
+    width: 100%;
+    background-color: rgb(60, 228, 9);
+}
+
+.highlightSearch{
+   
+    backdrop-filter: blur(10px);
+    height: 250px;
+    position: relative;
+    width: 80%;
+    left: 10%;
+}
+
+/* Job Request and pending interviews */
+.lastSection1{
+    
+    backdrop-filter: blur(10px);
+    width: 40%;
+    margin-top: 20px;
+    height: 200px;
+}
+.lastSection1 table{
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 5%;
+    background-color: rgb(60, 228, 9);
+}
+
+.lastSection1 p{
+    font-size: 200%;
+    text-align: center;
+    margin-top: 50px;
+    color: #1ed31e;
+    backdrop-filter: blur(10px);
+}
+
+.lastSection2{
+  
+    backdrop-filter: blur(10px);
+    width: 40%;
+    position: relative;
+    top: -100px;
+    margin-left: 60%;
+    height: 200px;
+}
+.lastSection2 table{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+    background-color: rgb(60, 228, 9);
+}
+
+.lastSection2 p{
+    font-size: 200%;
+    position: relative;
+    left: 30%;
+    margin-top: -100px;
+    color: #1ed31e;
+    backdrop-filter: blur(10px);
+}
+
