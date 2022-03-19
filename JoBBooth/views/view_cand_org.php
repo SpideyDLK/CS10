@@ -9,7 +9,21 @@ if(!isset($_SESSION['username'])){
 <head>
     <title>JoBBooth</title>
         <link rel="stylesheet" href="style.css">
+        <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
+        <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <?php 
+        if(isset($_POST["uName"])){
+            $uName =  $_POST["uName"];
+        }
+        else if(isset($_SESSION['candUname'])){
+            $uName =  $_SESSION['candUname'];
+            unset($_SESSION['candUname']);
+        }
+            
+        ?>
 </head>
 <body class="viewAd">
     <div class="logoBack">
@@ -23,47 +37,108 @@ if(!isset($_SESSION['username'])){
             </div>
         </div>
  
-    <div class="viewCandContainer"> 
-        <div class="col1-viewAd">
-        <img id="proPic-viewAd" src="../material/images/dafault_pro_pic.jpg" alt="Profile Photo">
-        </div>
+    <div class="viewCandContainer"> </div>
 
-        <div class="col2-viewAd">
-            <fieldset>
-                <legend>Personal Details</legend>
-            <div class="persDet-viewCand" id="persDet-viewCand"><b>Name:</b> FirstName LastName<br><b>Email:</b> abc@gmail.com<br><b>Contact No.:</b> 0711234567</div>
-            </fieldset>
-            
-            <fieldset>
-                <legend>Address</legend>
-            <div>Address Line 1,<br>Address Line 2,<br>Street Name,<br>City.<p id="address-viewCand"></p></div>
-            </fieldset>
-            
-        </div>
+    <div class="orgJobReqtoCandForm" id="orgJobReqtoCandForm">
+    <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+    <i id="closeBtn" class="far fa-times-circle"></i>
+    <div class="heading"><h>Send Job Request</h></div>
+        <input type="hidden" name="type" value="orgSendJobReqCand">
+        <input id="candUnameInput" type="hidden" name="candUname" value="">
 
-        <div class="col3-viewAd">
-            <fieldset>
-                <legend>Interested Job Position(s)</legend>
-            <div class="jobPos-viewCand" id="jobPos-viewCand">
-                <ul>
-                    <li>Job Position 1</li>
-                    <li>Job Position 2</li>
-                    <li>Job Position 3</li>
-                    <li>Job Position 4</li>
-                    <li>Job Position 5</li>
-                </ul>
-            </div>
-            </fieldset>
+        <label for="jobPos">Available Job Position<span class="reqStar">*</span></label>
+        <input id="jobPos" name="jobPos" type="text" required>
 
-            <fieldset>
-                <legend>Level of Education</legend>
-            <div  id="lvlEdu-viewCand">Undergraduate</div>
-            </fieldset>
-            <button class="sendReqBtn-viewCand" type="submit">SEND JOB REQUEST</button>
-        </div>
-        
+        <br>
+        <label for="jobType">Job Type<span class="reqStar">*</span></label>
+        <select class="jobTypeDropdown selectBox" name="jobType">
+                                <option value="0" selected disabled>Select:</option>
+                                <option value="1">Full Time</option>
+                                <option value="2">Part Time</option>
+                                <option value="3">Work From Home</option>
+        </select>
 
+        <label for="sal">Salary (LKR)<span class="reqStar">*</span></label>
+        <input id="sal" name="sal" type="number" min="1" step="any" required>
+
+        <label>Salary Frequency<span class="reqStar">*</span></label>
+                <select class="salFreq" name="salFreq">
+                    <option value="0" selected disabled>Select:</option>
+                    <option value="1">Hourly</option>
+                    <option value="2">Daily</option>
+                    <option value="3">Monthly</option>
+                    <option value="4">Per Job</option>
+        </select>
+        <br>
+        <label for="desc">Description</label>
+        <textarea id="desc" name="desc" type="text" form="form-container"> </textarea>
+        <button type="submit">SEND</button>
+    </form>
     </div>
+
+    <div class="areYourSureMsg" id="areYourSureMsg">
+    <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+    <input type="hidden" name="type" value="orgCancelJobReqCand">
+    <input id="candUnameInput2" type="hidden" name="candUname" value="">
+    <h><i class="fas fa-exclamation"></i> Are you sure to cancel the job request?</h><br>
+    <button class="yesBtn" type="submit">Yes</button>
+    <button class="noBtn" type="button">No</button>
+    </form>
+    </div>
+
+    <div class="reportCand" id="reportCand">
+
+    <form id="reportForm-container" class="form-container" method="post" action="../controllers/userController.php">
+    <i id="closeBtnReport" class="far fa-times-circle"></i>
+    <input type="hidden" name="type" value="reportCand">
+    <input id="candUnameInput3" type="hidden" name="candUname" value="">
+
+    <label for="sub">Subject<span class="reqStar">*</span></label>
+    <input id="sub" name="sub" type="text" placeholder="Please enter the reason you are reporting" required>
+
+    <label for="reportDesc">Description<span class="reqStar">*</span></label>
+    <textarea id="reportDesc" name="reportDesc" type="text" form="reportForm-container" placeholder="Briefly describe your reason" required></textarea>
+    
+    <button class="submitBtn" type="submit">SUBMIT</button>
+    </form>
+    </div>
+
+
+    <script>
+        var uName = "<?php echo $uName ?>";
+        $( document ).ready(function() {
+            var searchResults = $(".viewCandContainer");
+            $.get("../controllers/searchDataController.php?q=viewCand", {uName:uName}).done(function(data){
+                    searchResults.html(data);
+                   
+            });
+            $("#candUnameInput").val(uName);
+            $("#candUnameInput2").val(uName);
+            $("#candUnameInput3").val(uName);
+            
+        });
+
+        $("#closeBtn").on("click",function(){
+            $("#orgJobReqtoCandForm").hide();
+        });
+        $("#closeBtnReport").on("click",function(){
+            $("#reportCand").hide();
+        });
+        $(".noBtn").on("click",function(){
+            $("#areYourSureMsg").hide();
+        });
+
+        function openForm() {
+        document.getElementById("orgJobReqtoCandForm").style.display = "block";
+        }
+        function openReportForm() {
+        document.getElementById("reportCand").style.display = "block";
+        }
+        function openAlert() {
+        document.getElementById("areYourSureMsg").style.display = "block";
+        }
+
+    </script>
 
 </body>
 </html>

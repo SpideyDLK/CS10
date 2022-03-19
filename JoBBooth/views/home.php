@@ -44,7 +44,7 @@ if(isset($_SESSION['username'])){
             <p1>Welcome to JoBBooth!</p1>
             <p2>JoBBooth is a job finding and recruitment platform with lots of cool features that will make your life easy. This platform is mainly built up to overcome the difficulties faced by job seekers and organizations in the recruitment process.</p2>
             <p3>Join with us to make your job hunting or recruitment so much easier. </p3>
-            <p4>Recruitment agencies can <a href="signup_rec.php"><button class="recJoinHereBtn" type="submit">Join Here !</button></a></p4> 
+            
         </div>
 
         <div class="loginFormContainer">
@@ -78,9 +78,14 @@ if(isset($_SESSION['username'])){
                 <br><br><br>
                 <button type="submit">LOGIN</button>
                 <br><br>
-                <a>New to JoBBooth? </a><br> <a class="su" href="signup_cand.php">Sign Up as a Candidate</a> <br> <a class="su" href="signup_org.php">Sign Up as an Organization</a>
+                <a>New to JoBBooth? </a><br> 
 
             </form>
+            <a href="../views/signup_window.php">
+            <button id="signupbtn" type="submit"><span>SIGN-UP</span></button>
+            </a>
+            
+
         </div>
         <script src="home_js.js"></script>
     </body>

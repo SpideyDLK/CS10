@@ -1,10 +1,28 @@
+<?php
+include_once '../helpers/session_helper.php';
+if(!isset($_SESSION['username'])){
+  redirect("../views/home.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Job Request | JoBBooth</title>
+    <title>JoBBooth</title>
         <link rel="stylesheet" href="style.css">
+        <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
+        <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
+        <?php 
+        if(isset($_GET["id"])){
+            $id =  $_GET["id"];
+        }
+        else if(isset($_SESSION['id'])){
+            $uName =  $_SESSION['id'];
+            unset($_SESSION['id']);
+        }
+        ?>
 </head>
 <body class="viewAd">
     <div class="logoBack">
@@ -18,42 +36,28 @@
             </div>
         </div>
  
-    <div class="viewAdContainer"> 
-        <div class="col1-viewAd">
-        <img id="proPic-viewAd" src="../material/images/dafault_pro_pic.jpg" alt="Profile Photo">
-        </div>
-
-        <div class="col2-viewAd">
-            <fieldset>
-                <legend>Organization</legend>
-            <div class="orgName-viewAd">JoBBooth Inc.</div>
-            </fieldset>
-            
-            <fieldset>
-                <legend>Description</legend>
-            <div class="Desc-viewAd"><p>JoBBooth is an online platform to interact among job seeking candidates and organizations.
-                This system is mainly built up as a solution for the difficulties that the candidates and organizations face in the
-                recruitment process. We are looking for a financial accountant with 2 years experience in the field.</p></div>
-            </fieldset>
-            
-        </div>
-
-        <div class="col3-viewAd">
-            <fieldset>
-                <legend>Available Position</legend>
-            <div class="jobPos-viewAd">Financial Accountant</div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Salary</legend>
-            <div class="salary-viewAd">100,000 LKR per month</div>
-            </fieldset>
-            <div class="button-viewAd"><button class="sendReqBtn-viewAd" type="submit">ACCEPT</button></div>
-            <div class="button-viewAd"><button class="cancelBtn-viewAd" type="submit">DECLINE</button></div>
-        </div>
-        
+    <div class="viewJobReqCandContainer"> 
 
     </div>
+
+    
+        
+
+    <script>
+        $( document ).ready(function() {
+            var id = "<?php echo $id ?>";
+            var searchResults = $(".viewJobReqCandContainer");
+            $.get("../controllers/searchDataController.php?q=viewJobReqCand", {id:id}).done(function(data){
+                    searchResults.html(data);
+                   
+            });
+            // $("#candUnameInput").val(uName);
+            // $("#candUnameInput2").val(uName);
+            // $("#candUnameInput3").val(uName);
+            
+        });
+    </script>
+    
 
 </body>
 </html>

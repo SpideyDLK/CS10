@@ -15,20 +15,20 @@ class userController{
 
 
     public function reset_password(){
-        //$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $token = md5(rand());
         $email=trim($_POST['email']);
 
         if($this->frgtPwdM->findEmailfromusers($email)){
          if($this->frgtPwdM->updatetoken($email,$token)){
-          // $token =  $this->userM->selecttoken($email);
+        //   $token =  $this->userM->selecttoken($email);
           $to = $email;
-          $subject = 'Reset Password Notification';
+          $subject = 'JoBBooth Password Reset Request';
           $from = 'jobboothcs10@gmail.com';
-          $message = "<h2>Hello</h2>
-          <h3>You are recieving this email because we received a password reset request for your account</h3>
+          $message = "<h2>Hello, $email</h2>
+          <h3>You are recieving this email because we received a password reset request for this e-mail. If you didn't request for a reset, please ignore this e-mail.</h3>
           <br><br>
-          <a href ='http://localhost:1234/JoBBooth/views/change_password.php?token=$token&email=$email'>Click me</a>";
+          <a href ='http://localhost:1234/JoBBooth/views/change_password.php?token=$token&email=$email'>Click here to reset the password.</a>";
         
           $headers = "MIME-Version: 1.0" . "\r\n";
           $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -45,7 +45,7 @@ popUp( "loginGreen","We emailed you a password reset link.");
         }
     }
     else{
-        popUp("loginRed","This email does not exsits!");
+        popUp("loginRed","This email isn't registered!");
         redirect("../views/reset_password.php");
     }
 }
