@@ -38,7 +38,14 @@ if(!isset($_SESSION['username'])){
                 <h3>Your struggling days to recruit is now behind...</h3>
             </div>
             <div class="proPic">
-                <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture">
+                <!-- <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture">
+               -->
+               <?php if(isset($_SESSION['pp'])){
+                    echo "<embed class='proPicEdit' src='data:image/png;base64,".base64_encode($_SESSION['pp'])."'/>";
+                }else{
+                    echo "<div id='generatedProPic'></div>";
+                }?>
+                
                 <h><?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
                   }?></h>
@@ -292,6 +299,14 @@ if(!isset($_SESSION['username'])){
             });
 
           });
+
+          //profile pic first name first letter
+          $(document).ready(function(){
+            var firstName = "<?php echo $_SESSION['fName']?>";
+            let initials = firstName.charAt(0).toUpperCase();
+            document.getElementById("generatedProPic").innerHTML = initials;
+          });
+          
 
           //side bar
 

@@ -769,8 +769,10 @@ class userController{
         $_SESSION['username'] = $user->username;
         unset($_SESSION['fName']);
         unset($_SESSION['userRole']);
+        unset($_SESSION['pp']);
         $_SESSION['fName'] = $fName;
         $_SESSION['userRole'] = $user->user_role;
+        $_SESSION['pp'] = $user->profile_photo;
         switch($_SESSION['userRole']){
             case 'Organization':
                 redirect("../views/org_home.php");

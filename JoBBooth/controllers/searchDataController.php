@@ -251,12 +251,22 @@ class userController{
         }
         else{
             for ($x=0;$x<count($rows);$x++){
+                $initial = $rows[$x]->first_name;
+                $initial = substr($initial,0,1);
+                $initial = strtoupper($initial);
                 echo '<div class="candSearchResContOrgHome">
                 <form method="POST" action="view_cand_org.php" target="_blank">
                         <input type="hidden" name="uName" value="'.$rows[$x]->cand_username.'">
                 </form>
-                <div class="pp">
-                <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows[$x]->profile_photo).'"/>
+                <div class="pp">';
+                if($rows[$x]->profile_photo){
+                    echo '<img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows[$x]->profile_photo).'"/>';
+                }else{
+                    echo '<div id="generatedProPicSearch">'.$initial.'</div>';
+                }
+                
+                echo '
+                
                 <p>'.$rows[$x]->first_name.' '.$rows[$x]->last_name.'</p>
                 </div>
                 <table class="det">
@@ -357,8 +367,18 @@ class userController{
             }
 
             if($rows){
-                echo '<div class="col1-viewAd">
+                $initial = $rows->first_name;
+                $initial = substr($initial,0,1);
+                $initial = strtoupper($initial);
+                if($rows->profile_photo){
+                    echo '<div class="col1-viewAd">
                 <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows->profile_photo).'"/>';
+                }
+                else{
+                    echo '<div class="col1-viewAd">
+                    <div id="generatedProPic">'.$initial.'</div>';
+                }
+                
                 if($cv){
                     echo '<br>
                     <a id="cvDownBtn"  href="../helpers/downloadCV.php"><i class="fas fa-download"></i> Download CV</a>';
@@ -496,8 +516,14 @@ class userController{
             }
 
             if($rows){
-                echo '<div class="col1-viewAd">
+                if($rows->profile_photo){
+                    echo '<div class="col1-viewAd">
                 <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows->profile_photo).'"/>';
+                }else{
+                    echo '<div class="col1-viewAd">
+                    <div id="generatedProPic"></div>';
+                }
+                
                 if($cv){
                     echo '<br>
                     <a id="cvDownBtn"  href="../helpers/downloadCV.php"><i class="fas fa-download"></i> Download CV</a>';
@@ -610,7 +636,14 @@ class userController{
             // }
             echo '
         </div>
-        
+        <input type="hidden" id="fName" value="'.$rows->first_name.'">
+        <script>
+        $(document).ready(function(){
+            var firstName = document.getElementById("fName").value;
+            let initials = firstName.charAt(0).toUpperCase();
+            document.getElementById("generatedProPic").innerHTML = initials;
+        });
+        </script>
         
         ';
             }
@@ -1032,8 +1065,18 @@ class userController{
         $rows = $this->searchM->viewJobReqCand($id);
 
         if($rows){
-            echo '<div class="col1-viewAd">
+            $initial = $rows->company_name;
+            $initial = substr($initial,0,1);
+            $initial = strtoupper($initial);
+            if($rows->profile_photo){
+                echo '<div class="col1-viewAd">
                 <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows->profile_photo).'"/>';
+            }
+            else{
+                echo '<div class="col1-viewAd">
+                <div id="generatedProPic">'.$initial.'</div>';
+            }
+           
                 
     echo '
     </div>
@@ -1104,6 +1147,15 @@ class userController{
             <div class="button-viewAd"><button class="sendReqBtn-viewAd" type="submit">ACCEPT</button>
             </form>
             
+            ';
+        }
+        else{
+            echo '
+            <form action="../controllers/userController.php" method="post">
+            <input type="hidden" name="type" value="candAcceptOrgReq">
+            <input type="hidden" name="id" value="'.$rows->id.'">
+            <div class="button-viewAd"><button class="sendReqBtn-viewAd" type="submit">ACCEPT</button>
+            </form>
             ';
         }
         
@@ -1332,8 +1384,8 @@ class userController{
                 <td>'.$rows[$x]->time.'</td>
                 <td><a target="_blank" href="'.$rows[$x]->link.'">URL</a></td>';
                 if($cv){
-                    echo '<br>
-                    <a   href="../helpers/downloadCV.php"><i class="fas fa-download"></i> Download CV</a>';
+                    echo '<td>
+                    <a   href="../helpers/downloadCV.php"><i class="fas fa-download"></i> Download CV</a></td>';
                 }else{
                     echo '<td>No CV</td>';
                 }
