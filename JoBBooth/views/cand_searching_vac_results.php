@@ -86,12 +86,22 @@ if(!isset($_SESSION['username'])){
                 }
                 else{
                     for ($x=0;$x<count($_SESSION['searchRes']);$x++){
+                        $initial = $_SESSION['searchRes'][$x]->company_name;
+                        $initial = substr($initial,0,1);
+                        $initial = strtoupper($initial);
                         echo '<div class="candSearchResContOrgHome">
                         <form method="POST" action="view_ad_cand.php" target="_blank">
                         <input type="hidden" name="refNo" value="'.$_SESSION['searchRes'][$x]->ref_no.'">
                         </form>
-                        <div class="pp">
-                        <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($_SESSION['searchRes'][$x]->profile_photo).'"/>
+                        <div class="pp">';
+                        if($_SESSION['searchRes'][$x]->profile_photo){
+                            echo '<img id="proPic" src="data:image/jpeg;base64,'.base64_encode($_SESSION['searchRes'][$x]->profile_photo).'"/>';
+                        }
+                        else{
+                            echo '<div id="generatedProPicSearch">'.$initial.'</div>';
+                        }
+                        echo '
+                        
                         <p>'.$_SESSION['searchRes'][$x]->company_name.'</p>
                         </div>
                         <table class="det">

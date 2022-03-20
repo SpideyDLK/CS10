@@ -200,6 +200,29 @@ class userController{
 
     }
 
+    public function adminDeact(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminDeact($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    
+
+    public function adminActive(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminActive($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
     public function recSignup(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -769,8 +792,10 @@ class userController{
         $_SESSION['username'] = $user->username;
         unset($_SESSION['fName']);
         unset($_SESSION['userRole']);
+        unset($_SESSION['pp']);
         $_SESSION['fName'] = $fName;
         $_SESSION['userRole'] = $user->user_role;
+        $_SESSION['pp'] = $user->profile_photo;
         switch($_SESSION['userRole']){
             case 'Organization':
                 redirect("../views/org_home.php");
@@ -864,6 +889,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             break;
         case 'signupAdmin':
             $init->signupAdmin();
+            break;
+        case 'adminDeact':
+            $init->adminDeact();
+            break;
+        case 'adminActive':
+            $init->adminActive();
             break;
         case 'candAcceptOrgReq':
             $init->candAcceptOrgReq();

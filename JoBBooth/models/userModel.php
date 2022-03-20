@@ -161,6 +161,29 @@ class userModel{
         }
     }
 
+    public function adminDeact($username){
+        $this->DB->sql('UPDATE users SET account_status="Suspended" WHERE username = :username');
+        $this->DB->bind(':username',$username);
+
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function adminActive($username){
+        $this->DB->sql('UPDATE users SET account_status="Active" WHERE username = :username');
+        $this->DB->bind(':username',$username);
+
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+
     public function candSignup($data,$jobPos,$skill,$cvFile,$name,$filetype,$size,$type){
         $this->DB->sql('INSERT INTO users (username,password,user_role)
         VALUES (:uname,:pwd,"Candidate");

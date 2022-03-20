@@ -107,12 +107,23 @@ if(!isset($_SESSION['username'])){
                 }
                 else{
                     for ($x=0;$x<count($_SESSION['searchRes']);$x++){
+                        $initial = $_SESSION['searchRes'][$x]->first_name;
+                        $initial = substr($initial,0,1);
+                        $initial = strtoupper($initial);
                         echo '<div class="candSearchResContOrgHome">
                         <form method="POST" action="view_cand_org.php" target="_blank">
                         <input type="hidden" name="uName" value="'.$_SESSION['searchRes'][$x]->cand_username.'">
                         </form>
                         <div class="pp">
-                        <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($_SESSION['searchRes'][$x]->profile_photo).'"/>
+                        ';
+                        if($_SESSION['searchRes'][$x]->profile_photo){
+                            echo '<img id="proPic" src="data:image/jpeg;base64,'.base64_encode($_SESSION['searchRes'][$x]->profile_photo).'"/>';
+                        }
+                        else{
+                            echo '<div id="generatedProPicSearch">'.$initial.'</div>';
+                        }
+                        echo
+                        '
                         <p>'.$_SESSION['searchRes'][$x]->first_name.' '.$_SESSION['searchRes'][$x]->last_name.'</p>
                         </div>
                         <table class="det">
@@ -163,7 +174,7 @@ if(!isset($_SESSION['username'])){
                 } else{
                     resultDropdown.empty();
                 }
-                    });
+                });
 
                 $(document).on("click", ".result p", function(){
                 $(this).parents(".searchVacancy-resultPage").find('input[type="text"]').val($(this).text().replace(/\(.*?\)/g,''));
@@ -302,7 +313,6 @@ if(!isset($_SESSION['username'])){
             $(".candSearchResContOrgHome").on("click",function(){
                 $(this).children("form").submit();
             });
-
         </script>
       
         

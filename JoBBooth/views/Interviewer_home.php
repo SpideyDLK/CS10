@@ -45,7 +45,10 @@ if(!isset($_SESSION['username'])){
                 <h3>Your struggling days to recruit is now behind...</h3>
             </div>
             <div class="proPic">
-                <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture">
+                <!-- <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"> -->
+                <?php if(isset($_SESSION['pp'])){
+                    echo "<embed class='proPicEdit' src='data:image/png;base64,".base64_encode($_SESSION['pp'])."'/>";
+                }?>
                 <h><?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
                   }?></h>
