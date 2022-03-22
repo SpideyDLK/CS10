@@ -593,5 +593,29 @@ class searchModel{
             return false;
         }
     }
+    public function orgDashboard($uName){
+        $this->DB->sql('SELECT * FROM advertisement WHERE org_username = :uname AND status = "Published"');
+        $this->DB->bind(':uname',$uName);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
+    public function getProPic($uName){
+        $this->DB->sql('SELECT profile_photo FROM users WHERE username = :uname');
+        $this->DB->bind(':uname',$uName);
+
+        $rows = $this->DB->single();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
     
 }
