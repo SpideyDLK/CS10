@@ -346,12 +346,74 @@ class userModel{
 
     }
 
-    public function editProfileCand($name,$type,$data){
+    public function settings($uname){
+        $this->DB->sql('SELECT * FROM candidate WHERE cand_username=:uname');
+
+        $this->DB->bind(':uname',$uname);
+        $rows = $this->DB->single();
+        
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function editProPicCand($name,$type,$data){
         $this->DB->sql('UPDATE users SET profile_photo = :data WHERE username = :uname');
 
         $this->DB->bind(':data',$data);
         $this->DB->bind(':uname',$_SESSION['username']);
         if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function edit_profile_cand_data($data,$cvFile,$name,$filetype,$size){
+        $this->DB->sql('UPDATE candidate SET first_name = :fName, last_name = :lName, nic = :nic, district = :dis, city = :city,email = :email,
+        contact_no = :contact, work_experience = :workEx, current_company = :currComp, current_designation = :currDesig,
+        level_of_education = :loe, uni_or_institute = :uni, deg_cert_or_dip_title = :degTitle WHERE cand_username = :uName');
+
+        $this->DB->bind(':fName',$data['fName']);
+        $this->DB->bind(':lName',$data['lName']);
+        $this->DB->bind(':nic',$data['nic']);
+        $this->DB->bind(':dis',$data['district']);
+        $this->DB->bind(':city',$data['city']);
+        $this->DB->bind(':email',$data['email']);
+        $this->DB->bind(':contact',$data['contact']);
+        $this->DB->bind(':workEx',$data['workEx']);
+        $this->DB->bind(':currComp',$data['currComp']);
+        $this->DB->bind(':currDesig',$data['currDesig']);
+        $this->DB->bind(':loe',$data['eduLevel']);
+        $this->DB->bind(':uni',$data['uniOrInstitute']);
+        $this->DB->bind(':degTitle',$data['degreeTitle']);
+        $this->DB->bind(':uName',$_SESSION['username']);
+        $isExecuted = true;
+        if(!$this->DB->execute()){
+            $isExecuted = false;
+        }
+
+        if($cvFile){
+            $this->DB->sql('DELETE FROM cv_files WHERE cand_username = :uname');
+            $this->DB->bind(':uname',$_SESSION['username']);
+
+            if($this->DB->execute()){
+                $this->DB->sql('INSERT INTO cv_files(cand_username,name,type,size,data) VALUES(:uname,:filename,:filetype,:filesize,:filedata)');
+                $this->DB->bind(':uname',$_SESSION['username']);
+                $this->DB->bind(':filename',$name);
+                $this->DB->bind(':filetype',$filetype);
+                $this->DB->bind(':filesize',$size);
+                $this->DB->bind(':filedata',$cvFile);
+                if(!$this->DB->execute()){
+                    $isExecuted = false;
+                }
+            }
+        }
+
+        if($isExecuted){
             return true;
         }else{
             return false;

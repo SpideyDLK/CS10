@@ -2195,6 +2195,38 @@ legend{
     height: fit-content;
     max-height: 260px;
 }
+.uni-suggestions-edit{
+    width: 20%;
+    left: 40%;
+    top: 190%;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 999;
+    background-color: var(--textBoxBack);
+    border-radius: 10px;
+    text-align: left;
+    font-family: var(--labelFont);
+    overflow: auto;
+    height: fit-content;
+    max-height: 260px;
+}
+.deg-suggestions-edit{
+    width: 20%;
+    left: 40%;
+    top: 190%;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 999;
+    background-color: var(--textBoxBack);
+    border-radius: 10px;
+    text-align: left;
+    font-family: var(--labelFont);
+    overflow: auto;
+    height: fit-content;
+    max-height: 260px;
+}
 .deg-suggestions{
     width: 90%;
     position: absolute;
@@ -2213,11 +2245,11 @@ legend{
 }
 
 
-.tags1-suggestions p:hover,.tags2-suggestions p:hover, .company-suggestions p:hover, .desig-suggestions p:hover, .uni-suggestions p:hover, .deg-suggestions p:hover{
+.tags1-suggestions p:hover,.tags2-suggestions p:hover, .company-suggestions p:hover, .desig-suggestions p:hover, .uni-suggestions p:hover, .uni-suggestions-edit p:hover, .deg-suggestions p:hover{
     background: teal;
     color: white;
 }
-.tags1-suggestions p, .tags2-suggestions p, .company-suggestions p, .desig-suggestions p, .uni-suggestions p,.deg-suggestions p{
+.tags1-suggestions p, .tags2-suggestions p, .company-suggestions p, .desig-suggestions p, .uni-suggestions p,.uni-suggestions-edit p,.deg-suggestions p{
     margin: 0;
     padding: 7px 10px;
     border-bottom: 1px solid var(--labelColor);
@@ -2692,7 +2724,7 @@ legend{
     cursor: pointer;
 }
 
-.eduDropDownEdit{
+.eduDropDownEdit,.workExEdit{
     font-size: 15px;
     height: 30px;
     margin: 0;
@@ -3728,6 +3760,19 @@ legend{
     line-height: 100px;
     font-family: body;
 }
+#generatedProPicEdit{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-left: 140px;
+    margin-bottom: 10px;
+    background: #512DA8;
+    font-size: 35px;
+    color: #fff;
+    text-align: center;
+    line-height: 90px;
+    font-family: body;
+}
 
 .signupRoleSelectCont{
     width: 100%;
@@ -3822,6 +3867,108 @@ legend{
       background-color: teal;
       border-radius: 5px;
     }
+
+    /*dashboard*/
+
+    .recentW h2{
+        color: teal;
+        font-family: body;
+        text-align: center;
+    }
+
+    .slideshow-container {
+        position: relative;
+        width: 70%;
+        
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 10px;
+        background-color: #b2d8d8;
+    }
+    
+    
+    .jobContainer{
+        width: 100%;
+        padding: 1%;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    
+    .jobContainerInner{
+        width: 70%;
+        padding: 5px;
+        height: fit-content;
+        /* min-height: 0px; */
+        background-color: var(--offWhite);
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+    .jobContainerInner .noResult{
+        text-align: center;
+    }
+    
+    #noResult{
+        width: 50%;
+        height: 50%;
+    }
+    #noResultRec{
+        width: 40%;
+        height: 40%;
+        margin-top: -100px;
+    }
+    
+    .recJobs{
+        width: 90%;
+        height: fit-content;
+        background-color: var(--textBoxBack);
+        border-radius: 10px;
+        margin: 20px;
+        padding: 10px;
+        display: flex;
+        font-family: body;
+    }
+    .recJobs:hover{
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+    
+    
+    .recJobs .pp{
+        min-width: 170px;
+        width: fit-content;
+        height: calc(100%-10px);
+        border: 2px solid var(--jetBlack);
+        border-radius: 10px;
+        padding: 5px;
+        background-color: var(--lightTeal);
+        text-align: center;
+        /* padding: 10px;
+        display: flex; */
+    }
+    .det .title{
+        width: 250px;
+        font-family: var(--labelFont);
+    }
+    .recJobs .det{
+        width: 95%;
+        height: calc(100%-10px);
+        padding: 5px;
+        background-color: var(--lightTeal);
+        margin-left: 20px;
+        border: 2px solid var(--jetBlack);
+        border-radius: 10px;
+        /* background-color: wheat; */
+        /* padding: 10px;
+        display: flex; */
+    }
+    /*end dashboard*/
 
 /* begin of window page  */
 /* .signupContainer{

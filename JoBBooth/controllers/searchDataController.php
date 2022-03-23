@@ -1476,6 +1476,64 @@ class userController{
             </script>';
             }
     }
+
+    public function orgDashboard(){
+        $uName = $_SESSION['username'];
+        $rows = $this->searchM->orgDashboard($uName);
+             
+        // if(isset($rows)){
+            
+            if($rows){
+                echo '
+                    <div class="recentW">
+                    <h2><i class="fas fa-chart-line"></i> Dashboard
+                        
+                    </h2>
+                    </div>';
+                for ($x=0;$x<count($rows);$x++){
+                    echo '<div class="recJobs">
+                    <form method="POST" action="../views/view_responses.php?refNo='.$rows[$x]->ref_no.'" target="_blank">
+                    <input type="hidden" name="uName" >
+                    </form>
+                    <table class="det">
+                      <tr>
+                      <td class="title"><i class="fas fa-signature"></i><b> Ad Title</td><td>'.$rows[$x]->ad_title.'</td>
+                        </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-calendar-day"></i> Published Date </b></td><td>'.$rows[$x]->from_date.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-eye"></i> Views </b></td><td>'.$rows[$x]->no_of_views.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-reply-all"></i> Responses </b></td><td>'.$rows[$x]->no_of_responds.'</td>
+                      </tr>
+                     
+                    </table>
+                    </div>
+                    <script>
+                    $(".recJobs").on("click",function(){
+                        $(this).children("form").submit();
+                    });
+                    </script>
+
+                    ';
+                }
+            }
+            // else{
+            //     echo '<div class="noResult"><img id="noResult" src="../material/images/no-result.png" alt="Profile Picture"></div>';
+            //  }
+            // }
+    }
+
+    public function getProPic(){
+        $uname = $_SESSION['username'];
+        $rows = $this->searchM->getProPic($uname);
+        if($rows){
+            echo '<embed class="proPicEdit" src="data:image/png;base64,'.base64_encode($rows->profile_photo).'"/>';
+        }
+    }
+
     
     
     
@@ -1577,6 +1635,12 @@ switch($_GET['q']){
         break;
     case 'viewIntsCand':
         $init->viewIntsCand();
+        break;
+    case 'orgDashboard':
+        $init->orgDashboard();
+        break;
+    case 'getProPic':
+        $init->getProPic();
         break;
     
 }

@@ -287,10 +287,14 @@ include_once '../helpers/session_helper.php';
                     case "1":
                         $(".dynamicInput1-candSignup").hide();
                         $(".dynamicInput2-candSignup").hide();
+                        $(".dynamicInput2-candSignup").children("input").prop("required",false);
+                        $(".dynamicInput1-candSignup").children("input").prop("required",false);
                         break;
                     case "2":
                         $(".dynamicInput1-candSignup").hide();
                         $(".dynamicInput2-candSignup").hide();
+                        $(".dynamicInput2-candSignup").children("input").prop("required",false);
+                        $(".dynamicInput1-candSignup").children("input").prop("required",false);
                         break;
                     case "3":
                         $(".dynamicInput1-candSignup").show();

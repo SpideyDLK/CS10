@@ -505,6 +505,45 @@ class userController{
         }
     }
 
+    public function edit_profile(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'fName' => trim($_POST['fName']),
+            'lName' => trim($_POST['lName']),
+            'nic' => trim($_POST['nic']),
+            'district' => trim($_POST['district']),
+            'city' => trim($_POST['city']),
+            'contact' => trim($_POST['contact']),
+            'email' => trim($_POST['candEmail']),
+            'workEx' => trim($_POST['workEx']),
+            'currComp' => trim($_POST['currComp']),
+            'currDesig' => trim($_POST['currDesig']),
+            'eduLevel' => trim($_POST['eduLevel']),
+            'uniOrInstitute' => trim($_POST['uniOrInstitute']),
+            'degreeTitle' => trim($_POST['degreeTitle'])
+        ];
+
+        if($_FILES['cvInput']['size']!=0){
+            $name = $_FILES['cvInput']['name'];
+            $type = $_FILES['cvInput']['type'];
+            $size = $_FILES['cvInput']['size'];
+            $datafile = file_get_contents($_FILES['cvInput']['tmp_name']); 
+        }else{
+            $name = NULL;
+            $type = NULL;
+            $size = NULL;
+            $datafile = NULL;
+        }
+
+        if($this->userM->edit_profile_cand_data($data,$datafile,$name,$type,$size)){
+            popUp("loginGreen", "Data Saved Successfully");
+            $this->settings();
+        }else{
+            die("Something went wrong");
+        }
+    }
+
     public function unpublishAd(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $refNo = trim($_POST['refNo']);
@@ -631,12 +670,12 @@ class userController{
         }
     }
 
-    public function editProfileCand(){
+    public function editProPicCand(){
         $name = $_FILES['proPic']['name'];
         $type = $_FILES['proPic']['type'];
         $data = file_get_contents($_FILES['proPic']['tmp_name']);
 
-        if($this->userM->editProfileCand($name,$type,$data)){
+        if($this->userM->editProPicCand($name,$type,$data)){
             redirect("../views/home.php");
         }else{
             die("Something went wrong");
@@ -688,6 +727,20 @@ class userController{
             }
     }
 
+    
+
+    public function settings(){
+        $uname = $_SESSION['username'];
+        $rows = $this->userM->settings($uname);
+        if($rows){
+            unset($_SESSION['curr_details']);
+            $_SESSION['curr_details'] = $rows;
+            redirect("../views/pro_settings_cand.php");
+        }else{
+            die("Something went wrong");
+        }
+
+    }
     
 
     // public function viewIntList(){
@@ -843,8 +896,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'addSpecialAreaRec':
             $init->addSpecialAreaRec();
             break;
-        case 'editProfileCand':
-            $init->editProfileCand();
+        case 'editProPicCand':
+            $init->editProPicCand();
             break;
         case 'orgSendJobReqCand':
             $init->orgSendJobReqCand();
@@ -888,6 +941,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'rescheIntCand':
             $init->rescheIntCand();
             break;
+        case 'edit_profile':
+            $init->edit_profile();
+            break;
         default:
         redirect("../views/home.php");
     }
@@ -911,6 +967,9 @@ else{
             break;
         case 'removeInter':
             $init->removeInter();
+            break;
+        case 'settings':
+            $init->settings();
             break;
         default:
         redirect("../views/home.php");

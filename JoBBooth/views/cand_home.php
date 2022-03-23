@@ -44,7 +44,7 @@ if(!isset($_SESSION['username'])){
                 <!-- <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture">
                 <img id="proPic" src="data:image/jpeg;base64,"base64_encode($_SESSION['searchRes'][$x]->profile_photo).""/> -->
                 <?php if(isset($_SESSION['pp'])){
-                    echo "<embed class='proPicEdit' src='data:image/png;base64,".base64_encode($_SESSION['pp'])."'/>";
+                    echo "<div class='proPicEditCont'></div>";
                 }else{
                     echo "<div id='generatedProPic'></div>";
                 }?>
@@ -69,7 +69,7 @@ if(!isset($_SESSION['username'])){
           <div class="orgNavBar">
             <a href="interviews_cand.php"><i class="far fa-handshake"></i>  Interviews</a>
             <a href="cand_Pending_Job_Requests.php"><i class="fas fa-briefcase"></i> Jobs</a>
-            <a href="#"> <i class="fas fa-cog"></i></i> Settings</a>
+            <a href="../controllers/userController.php?q=settings"> <i class="fas fa-cog"></i></i> Settings</a>
             <!-- <a href="reg_interviewer.php">Register an Interviewer</a> -->
         </div>
                 </div>
@@ -253,6 +253,13 @@ if(!isset($_SESSION['username'])){
         
         
         <script>
+
+          //profile pic
+          var proPic = $('.proPicEditCont');
+            $.get("../controllers/searchDataController.php?q=getProPic").done(function(data){
+              proPic.html(data);
+            });
+
           $(document).ready(function(){
             //search suggestions
             $('.searchVacancy input[type="text"]').on("keyup input",function(){
