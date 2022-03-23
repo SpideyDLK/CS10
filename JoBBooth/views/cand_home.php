@@ -69,7 +69,7 @@ if(!isset($_SESSION['username'])){
           <div class="orgNavBar">
             <a href="interviews_cand.php"><i class="far fa-handshake"></i>  Interviews</a>
             <a href="cand_Pending_Job_Requests.php"><i class="fas fa-briefcase"></i> Jobs</a>
-            <a href="pro_settings.php"> <i class="fas fa-cog"></i></i> Settings</a>
+            <a href="../controllers/userController.php?q=settings"> <i class="fas fa-cog"></i></i> Settings</a>
             <!-- <a href="reg_interviewer.php">Register an Interviewer</a> -->
         </div>
                 </div>
@@ -259,7 +259,7 @@ if(!isset($_SESSION['username'])){
             $.get("../controllers/searchDataController.php?q=getProPic").done(function(data){
               proPic.html(data);
             });
-            
+
           $(document).ready(function(){
             //search suggestions
             $('.searchVacancy input[type="text"]').on("keyup input",function(){

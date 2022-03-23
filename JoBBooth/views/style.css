@@ -2195,6 +2195,38 @@ legend{
     height: fit-content;
     max-height: 260px;
 }
+.uni-suggestions-edit{
+    width: 20%;
+    left: 40%;
+    top: 190%;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 999;
+    background-color: var(--textBoxBack);
+    border-radius: 10px;
+    text-align: left;
+    font-family: var(--labelFont);
+    overflow: auto;
+    height: fit-content;
+    max-height: 260px;
+}
+.deg-suggestions-edit{
+    width: 20%;
+    left: 40%;
+    top: 190%;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 999;
+    background-color: var(--textBoxBack);
+    border-radius: 10px;
+    text-align: left;
+    font-family: var(--labelFont);
+    overflow: auto;
+    height: fit-content;
+    max-height: 260px;
+}
 .deg-suggestions{
     width: 90%;
     position: absolute;
@@ -2213,11 +2245,11 @@ legend{
 }
 
 
-.tags1-suggestions p:hover,.tags2-suggestions p:hover, .company-suggestions p:hover, .desig-suggestions p:hover, .uni-suggestions p:hover, .deg-suggestions p:hover{
+.tags1-suggestions p:hover,.tags2-suggestions p:hover, .company-suggestions p:hover, .desig-suggestions p:hover, .uni-suggestions p:hover, .uni-suggestions-edit p:hover, .deg-suggestions p:hover{
     background: teal;
     color: white;
 }
-.tags1-suggestions p, .tags2-suggestions p, .company-suggestions p, .desig-suggestions p, .uni-suggestions p,.deg-suggestions p{
+.tags1-suggestions p, .tags2-suggestions p, .company-suggestions p, .desig-suggestions p, .uni-suggestions p,.uni-suggestions-edit p,.deg-suggestions p{
     margin: 0;
     padding: 7px 10px;
     border-bottom: 1px solid var(--labelColor);
@@ -2692,7 +2724,7 @@ legend{
     cursor: pointer;
 }
 
-.eduDropDownEdit{
+.eduDropDownEdit,.workExEdit{
     font-size: 15px;
     height: 30px;
     margin: 0;
