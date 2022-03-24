@@ -3970,6 +3970,16 @@ legend{
     }
     /*end dashboard*/
 
+    .logOutBtn span{
+        color: teal;
+        font-size: 19px;
+        font-family: body;
+        text-decoration: none;
+    }
+    .logOutBtn span:hover{
+        color:white;
+    }
+
 /* begin of window page  */
 /* .signupContainer{
     position: relative;
