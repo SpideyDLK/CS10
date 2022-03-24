@@ -51,14 +51,18 @@ if(!isset($_SESSION['username'])){
                 <h><?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
                   }?></h>
-                  <div class="moreDropDown">
+                  <div class="logOutBtn" >
+                  <a href="../controllers/userController.php?q=logout"> <span><i class="fas fa-sign-out-alt"></i> Logout</span> </a>
+                  </div>
+                  
+                  <!-- <div class="moreDropDown">
                   <div class="moreBtn"><a href=""></a><span class="arrowDownIcon"><i id="userSettingsIcon" class="fas fa-user-cog"></i></span></div>
                   <div class="moreDropDown-content">
                         <a href="cand_edit_pro.php"><i class="fas fa-user-edit"></i> Edit Profile</a>
                         <a href="../views/add_more_job_pos.php"><i class="fas fa-plus-circle"></i> Add Job Positions</a>
                         <a href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                   </div>
-                  </div>
+                  </div> -->
                 
             </div>
         </div>
