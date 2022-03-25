@@ -280,6 +280,20 @@ class searchModel{
             return false;
         }
     }
+
+    public function adminNoOfUsers(){
+        $this->DB->sql('SELECT COUNT(*) AS No_Of_Users FROM users;');
+
+        $rows=$this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function viewAd($refNo){
         $this->DB->sql('UPDATE advertisement SET no_of_views=no_of_views+1 WHERE ref_no=:refNo');
         $this->DB->bind(':refNo',$refNo);
@@ -450,6 +464,32 @@ class searchModel{
         }
     }
 
+    public function CandJobApp($uName){
+        $this->DB->sql('SELECT id,company_name,job_title,job_type,rate,frequency FROM cand_job_app_view WHERE cand_username=:uName');
+        $this->DB->bind(':uName',$uName);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
+
+    public function orgDashboard($uName){
+        $this->DB->sql('SELECT * FROM advertisement WHERE org_username = :uname AND status = "Published"');
+        $this->DB->bind(':uname',$uName);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
+
     public function viewJobReqCand($id){
         $this->DB->sql('UPDATE org_send_job_req_cand SET status="Viewed" WHERE id=:id AND status = "Pending"');
         $this->DB->bind(':id',$id);
@@ -586,30 +626,6 @@ class searchModel{
         $this->DB->bind(':candUname',$uname);
 
         $rows = $this->DB->multiple();
-
-        if($this->DB->rowCount()>0){
-            return $rows;
-        }else{
-            return false;
-        }
-    }
-    public function orgDashboard($uName){
-        $this->DB->sql('SELECT * FROM advertisement WHERE org_username = :uname AND status = "Published"');
-        $this->DB->bind(':uname',$uName);
-
-        $rows = $this->DB->multiple();
-
-        if($this->DB->rowCount()>0){
-            return $rows;
-        }else{
-            return false;
-        }
-    }
-    public function getProPic($uName){
-        $this->DB->sql('SELECT profile_photo FROM users WHERE username = :uname');
-        $this->DB->bind(':uname',$uName);
-
-        $rows = $this->DB->single();
 
         if($this->DB->rowCount()>0){
             return $rows;

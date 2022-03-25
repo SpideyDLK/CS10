@@ -1,6 +1,12 @@
 <?php
 session_start();
 include_once '../helpers/session_helper.php';
+
+if(isset($_SESSION['username'])){
+    if($_SESSION['userRole']=='Administrator'){
+        redirect("../views/admin_home.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>

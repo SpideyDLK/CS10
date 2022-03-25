@@ -230,6 +230,9 @@ class userController{
     
     }
     
+    public function adminNoOfUsers(){
+        $rows = $this->searchM->adminNoOfUsers();
+    }
 
     public function filterRes(){
         // if(isset($_REQUEST["workEx"])){
@@ -496,6 +499,7 @@ class userController{
             }
         }
     }
+    
     public function viewRespondedCand(){
         if(isset($_REQUEST["uName"])){
             unset($_SESSION['cvDetails']);
@@ -1024,8 +1028,32 @@ class userController{
                 <td>'.$rows[$x]->nic.'</td>
                 <td>'.$rows[$x]->email.'</td>
                 <td>'.$rows[$x]->contact_no.'</td>
-                <td><a href="../controllers/userController.php?q=removeInter&uname='.$rows[$x]->inter_username.'" onclick="openAlert()">Remove</a></td>
+                <td>
+                <button class="candJobAppcancelBtn-viewAd" onclick="openAlert()" type="submit">Delete</button>
+                
+                <div class="areYourSureMsg" id="areYourSureMsg">
+                 <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+                 <input type="hidden" name="type" value="removeInter">                
+                <input type="hidden" name="uname" value="'.$rows[$x]->inter_username.'">
+                 <h><i class="fas fa-exclamation"></i> Are you sure to remove the interviewer?</h><br>
+                 <button class="yesBtn" type="submit">Yes</button>
+                 <button class="noBtn" type="button">No</button>
+                 </form>
+                 </div>
+    
+              </td>
+                
                 </tr>
+
+                <script>
+              $(".noBtn").on("click",function(){
+                $("#areYourSureMsg").hide();
+               });
+
+              function openAlert() {
+                document.getElementById("areYourSureMsg").style.display = "block";
+                }
+              </script>
                 ';
             }
             
@@ -1056,6 +1084,109 @@ class userController{
               </tr>';
           }
         }
+    }
+
+    public function candJobApp(){
+        if(isset($_REQUEST['uName'])){      // REQUEST will return both GET and POST values
+            $uName = $_REQUEST['uName'];
+        }
+
+        $rows = $this->searchM->candJobApp($uName);
+        if($rows){
+            echo '<tr>
+            <th><i class="fas fa-signature"></i> Oraganization\'s Name</th>
+            <th><i class="fas fa-briefcase"></i> Job Position</th>
+            <th><i class="fas fa-briefcase"></i> Job Type</th>
+            <th><i class="fas fa-coins"></i> Salary</th>
+            <th></th>
+          </tr>';
+          for($x=0;$x<count($rows);$x++){
+              echo '<tr>
+              <td>'.$rows[$x]->company_name.'</td>
+              <td>'.$rows[$x]->job_title.'</td>
+              <td>'.$rows[$x]->job_type.'</td>
+              <td>'.$rows[$x]->rate. ' LKR ' .$rows[$x]->salary_freq.'</td>
+             
+              <td>
+              
+              <button class="candJobAppcancelBtn-viewAd" onclick="openAlert()" type="submit">Delete</button>
+
+              
+                 <div class="areYourSureMsg" id="areYourSureMsg">
+                 <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+                 <input type="hidden" name="type" value="candCancelJobApp">                
+                <input type="hidden" name="id" value="'.$rows[$x]->id.'">
+                 <h><i class="fas fa-exclamation"></i> Are you sure you to remove the job application?</h><br>
+                 <button class="yesBtn" type="submit">Yes</button>
+                 <button class="noBtn" type="button">No</button>
+                 </form>
+                 </div>
+    
+              </td>
+
+              </tr>
+              
+              <script>
+              $(".noBtn").on("click",function(){
+                $("#areYourSureMsg").hide();
+               });
+
+              function openAlert() {
+                document.getElementById("areYourSureMsg").style.display = "block";
+                }
+              </script>
+              ';
+          }
+        }
+    }
+
+    public function orgDashboard(){
+        $uName = $_SESSION['username'];
+        $rows = $this->searchM->orgDashboard($uName);
+             
+        // if(isset($rows)){
+            
+            if($rows){
+                echo '
+                    <div class="recentW">
+                    <h2><i class="fas fa-chart-line"></i> Dashboard
+                        
+                    </h2>
+                    </div>';
+                for ($x=0;$x<count($rows);$x++){
+                    echo '<div class="recJobs">
+                    <form method="POST" action="../views/view_responses.php?refNo='.$rows[$x]->ref_no.'" target="_blank">
+                    <input type="hidden" name="uName" >
+                    </form>
+                    <table class="det">
+                      <tr>
+                      <td class="title"><i class="fas fa-signature"></i><b> Ad Title</td><td>'.$rows[$x]->ad_title.'</td>
+                        </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-calendar-day"></i> Published Date </b></td><td>'.$rows[$x]->from_date.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-eye"></i> Views </b></td><td>'.$rows[$x]->no_of_views.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-reply-all"></i> Responses </b></td><td>'.$rows[$x]->no_of_responds.'</td>
+                      </tr>
+                     
+                    </table>
+                    </div>
+                    <script>
+                    $(".recJobs").on("click",function(){
+                        $(this).children("form").submit();
+                    });
+                    </script>
+
+                    ';
+                }
+            }
+            // else{
+            //     echo '<div class="noResult"><img id="noResult" src="../material/images/no-result.png" alt="Profile Picture"></div>';
+            //  }
+            // }
     }
 
     public function viewJobReqCand(){
@@ -1171,23 +1302,79 @@ class userController{
     public function viewAllUsers(){
         $rows = $this->searchM->viewAllUsers();
 
+
         if($rows){
             echo '<tr>
             <th><i class="fas fa-user"></i> Username</th>
             <th><i class="fas fa-user-tag"></i> User Role</th>
             <th><i class="fas fa-flag"></i> Account Status</th>
-            <th></th>
-          </tr>
-            
-            ';
+            <th></th>';
+
             for($x=0;$x<count($rows);$x++){
                 echo '<tr>
                 <td>'.$rows[$x]->username.'</td>
                 <td>'.$rows[$x]->user_role.'</td>
                 <td>'.$rows[$x]->account_status.'</td>
-                <td>abc</td>
-              </tr>
-                ';
+
+            <td>';
+            if($rows[$x]->account_status=="Active"){
+                echo '<form action="../controllers/UserController.php" method="post">
+                <input type="hidden" name="type" value="adminDeact">
+                <input type="hidden" name="username" value="'.$rows[$x]->username.'">
+                <button type="submit" id="adminDeact"><i class="fas fa-times-circle"></i> DEACTIVATE</button>
+                <style>
+                #adminDeact{
+                    color: white;
+                    background-color: teal;
+                    border: none;
+                    width: 85%;
+                    height: 30px;
+                    font-family: body;
+                    font-weight: bold;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 10px;
+
+                #adminDeact:hover{
+                    color: teal;
+                    background-color: white;
+                }    
+                    
+                }
+                </style>
+                </form>';
+            }else{
+                echo '<form action="../controllers/UserController.php" method="post">
+                <input type="hidden" name="type" value="adminActive">
+                <input type="hidden" name="username" value="'.$rows[$x]->username.'">
+                <button type="submit" id="adminActive"><i class="fas fa-check-circle"></i> ACTIVATE</button>
+                <style>
+                #adminActive{
+                    color: white;
+                    background-color: red;
+                    border: none;
+                    width: 85%;
+                    height: 30px;
+                    font-family: body;
+                    font-weight: bold;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 10px;
+                    
+                }
+
+                #adminActive:hover{
+                    color: red;
+                    background-color: white;
+                }
+
+                </style>
+                </form>';
+            }
+            echo '</td>
+            
+            </tr>';
+
             }
         }
     }
@@ -1476,64 +1663,6 @@ class userController{
             </script>';
             }
     }
-
-    public function orgDashboard(){
-        $uName = $_SESSION['username'];
-        $rows = $this->searchM->orgDashboard($uName);
-             
-        // if(isset($rows)){
-            
-            if($rows){
-                echo '
-                    <div class="recentW">
-                    <h2><i class="fas fa-chart-line"></i> Dashboard
-                        
-                    </h2>
-                    </div>';
-                for ($x=0;$x<count($rows);$x++){
-                    echo '<div class="recJobs">
-                    <form method="POST" action="../views/view_responses.php?refNo='.$rows[$x]->ref_no.'" target="_blank">
-                    <input type="hidden" name="uName" >
-                    </form>
-                    <table class="det">
-                      <tr>
-                      <td class="title"><i class="fas fa-signature"></i><b> Ad Title</td><td>'.$rows[$x]->ad_title.'</td>
-                        </tr>
-                      <tr>
-                      <td class="title"><b><i class="fas fa-calendar-day"></i> Published Date </b></td><td>'.$rows[$x]->from_date.'</td>
-                      </tr>
-                      <tr>
-                      <td class="title"><b><i class="fas fa-eye"></i> Views </b></td><td>'.$rows[$x]->no_of_views.'</td>
-                      </tr>
-                      <tr>
-                      <td class="title"><b><i class="fas fa-reply-all"></i> Responses </b></td><td>'.$rows[$x]->no_of_responds.'</td>
-                      </tr>
-                     
-                    </table>
-                    </div>
-                    <script>
-                    $(".recJobs").on("click",function(){
-                        $(this).children("form").submit();
-                    });
-                    </script>
-
-                    ';
-                }
-            }
-            // else{
-            //     echo '<div class="noResult"><img id="noResult" src="../material/images/no-result.png" alt="Profile Picture"></div>';
-            //  }
-            // }
-    }
-
-    public function getProPic(){
-        $uname = $_SESSION['username'];
-        $rows = $this->searchM->getProPic($uname);
-        if($rows){
-            echo '<embed class="proPicEdit" src="data:image/png;base64,'.base64_encode($rows->profile_photo).'"/>';
-        }
-    }
-
     
     
     
@@ -1612,6 +1741,12 @@ switch($_GET['q']){
     case 'candAllJobReqs':
         $init->candAllJobReqs();
         break;
+    case 'candJobApp':
+        $init->candJobApp();
+        break; 
+    case 'orgDashboard':
+        $init->orgDashboard();
+        break;   
     case 'viewJobReqCand':
         $init->viewJobReqCand();
         break;
@@ -1635,12 +1770,6 @@ switch($_GET['q']){
         break;
     case 'viewIntsCand':
         $init->viewIntsCand();
-        break;
-    case 'orgDashboard':
-        $init->orgDashboard();
-        break;
-    case 'getProPic':
-        $init->getProPic();
         break;
     
 }

@@ -200,6 +200,29 @@ class userController{
 
     }
 
+    public function adminDeact(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminDeact($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    
+
+    public function adminActive(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminActive($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
     public function recSignup(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -442,6 +465,34 @@ class userController{
         }
     }
 
+    public function candCancelJobApp(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'uName' => trim($_SESSION['username']),
+            'id' => trim($_POST['id'])
+        ];
+
+        if($this->userM->candCancelJobApp($data)){
+        
+            redirect("../views/cand_Pending_Job_Requests.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+
+    public function removeInter(){
+        $uname = trim($_POST['uname']);
+
+        if($this->userM->removeInter($uname)){
+            popUp("loginGreen", "Interviewer Removed");
+            redirect("../views/interviewers.php");
+        }else{
+            die("Something went wrong");
+        }
+        
+    }
+
     public function scheIntOrg(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -500,45 +551,6 @@ class userController{
             // $_SESSION['candUname'] = $data['candUname'];
             popUp("loginGreen", "Request Sent");
             redirect("../views/interviews_cand.php");
-        }else{
-            die("Something went wrong");
-        }
-    }
-
-    public function edit_profile(){
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        $data =[
-            'fName' => trim($_POST['fName']),
-            'lName' => trim($_POST['lName']),
-            'nic' => trim($_POST['nic']),
-            'district' => trim($_POST['district']),
-            'city' => trim($_POST['city']),
-            'contact' => trim($_POST['contact']),
-            'email' => trim($_POST['candEmail']),
-            'workEx' => trim($_POST['workEx']),
-            'currComp' => trim($_POST['currComp']),
-            'currDesig' => trim($_POST['currDesig']),
-            'eduLevel' => trim($_POST['eduLevel']),
-            'uniOrInstitute' => trim($_POST['uniOrInstitute']),
-            'degreeTitle' => trim($_POST['degreeTitle'])
-        ];
-
-        if($_FILES['cvInput']['size']!=0){
-            $name = $_FILES['cvInput']['name'];
-            $type = $_FILES['cvInput']['type'];
-            $size = $_FILES['cvInput']['size'];
-            $datafile = file_get_contents($_FILES['cvInput']['tmp_name']); 
-        }else{
-            $name = NULL;
-            $type = NULL;
-            $size = NULL;
-            $datafile = NULL;
-        }
-
-        if($this->userM->edit_profile_cand_data($data,$datafile,$name,$type,$size)){
-            popUp("loginGreen", "Data Saved Successfully");
-            $this->settings();
         }else{
             die("Something went wrong");
         }
@@ -604,6 +616,7 @@ class userController{
     //     }
 
     // }
+    
     public function searchCandRec(){
         unset($_SESSION['searchRes']);
         unset($_SESSION['candJobPos']);
@@ -670,12 +683,12 @@ class userController{
         }
     }
 
-    public function editProPicCand(){
+    public function editProfileCand(){
         $name = $_FILES['proPic']['name'];
         $type = $_FILES['proPic']['type'];
         $data = file_get_contents($_FILES['proPic']['tmp_name']);
 
-        if($this->userM->editProPicCand($name,$type,$data)){
+        if($this->userM->editProfileCand($name,$type,$data)){
             redirect("../views/home.php");
         }else{
             die("Something went wrong");
@@ -692,18 +705,6 @@ class userController{
             $_SESSION['proPic'] = $rows;
             redirect("../views/cand_edit_pro.php");
         }
-    }
-
-    public function removeInter(){
-        $uname = $_GET['uname'];
-
-        if($this->userM->removeInter($uname)){
-            popUp("loginGreen", "Interviewer Removed");
-            redirect("../views/interviewers.php");
-        }else{
-            die("Something went wrong");
-        }
-        
     }
 
     public function candAcceptOrgReq(){
@@ -727,21 +728,16 @@ class userController{
             }
     }
 
+    public function delCandJobApp(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $id = trim($_POST['id']);
     
-
-    public function settings(){
-        $uname = $_SESSION['username'];
-        $rows = $this->userM->settings($uname);
-        if($rows){
-            unset($_SESSION['curr_details']);
-            $_SESSION['curr_details'] = $rows;
-            redirect("../views/pro_settings_cand.php");
-        }else{
-            die("Something went wrong");
-        }
-
+            if($this->userM->delCandJobApp($id)){
+                redirect("../views/cand_Pending_Job_Requests.php");
+            }else{
+                die("Something went wrong");
+            }
     }
-    
 
     // public function viewIntList(){
     //     $rows = $this->userM->viewIntList($_SESSION['username']);
@@ -791,6 +787,55 @@ class userController{
             redirect("../views/home.php");
         }
     }
+
+    public function current_password(){
+        
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+           
+            // $uname = $_SESSION['uname'];
+            $data =[
+                'currPass'=>trim($_POST['currPass']),
+                'newpwd' => trim($_POST['newPwd']),
+                'newconfPwd' => trim($_POST['newConfPwd']),
+                'uname' => trim($_SESSION['username'])
+            ];
+        
+          
+        
+            // $data['currPass'] = password_hash($data['currPass'], PASSWORD_DEFAULT);
+            $data['newpwd'] = password_hash($data['newpwd'], PASSWORD_DEFAULT);
+
+            
+        
+            if($this->userM->findUser($data['uname'])){
+                if($this->userM->checkAccountStatus($data['uname'])){
+                    $allowChangePass = $this->userM->validatePWD($data['uname'],$data['currPass']);
+    
+                    if($allowChangePass){
+                       
+                        if($this->userM->current_password($data)){
+                            popUp("loginGreen", "Password has been changed Successfully!");
+                            $this->logout();
+                        }else{
+                            die("Something went wrong");
+                        }
+                    }
+                    else{
+                        popUp("loginRed", "Incorrect password!");
+                        redirect("../views/pro_settings.php?q=2");
+                    }
+                }
+                else{
+                    popUp("loginRed", "Your account has been suspended!");
+                    redirect("../views/home.php");
+                }
+            }
+            else{
+                popUp("loginRed", "Incorrect username or password!");
+                redirect("../views/pro_settings.php");
+            }
+        }
+
     public function loginAdmin(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
@@ -803,6 +848,8 @@ class userController{
             $userLoggedIn = $this->userM->validatePWDAdmin($data['uname'],$data['pwd']);
 
             if($userLoggedIn){
+                $adminNoOfUsers = $this->userM->adminNoOfUsers();
+                $_SESSION['adminNoOfUsers'] = $adminNoOfUsers;
                 $_SESSION['username'] = $userLoggedIn->username;
                 $_SESSION['userRole'] = "Administrator";
                 redirect("../views/admin_home.php");
@@ -860,6 +907,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'login':
             $init->login();
             break;
+        case 'current_password':
+            $init->current_password();
+            break;
         case 'loginAdmin':
             $init->loginAdmin();
             break;
@@ -896,14 +946,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'addSpecialAreaRec':
             $init->addSpecialAreaRec();
             break;
-        case 'editProPicCand':
-            $init->editProPicCand();
+        case 'editProfileCand':
+            $init->editProfileCand();
             break;
         case 'orgSendJobReqCand':
             $init->orgSendJobReqCand();
             break;
         case 'orgCancelJobReqCand':
             $init->orgCancelJobReqCand();
+            break;
+        case 'candCancelJobApp':
+            $init->candCancelJobApp();
             break;
         case 'unpublishAd':
             $init->unpublishAd();
@@ -920,11 +973,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'signupAdmin':
             $init->signupAdmin();
             break;
+        case 'adminDeact':
+            $init->adminDeact();
+            break;
+        case 'adminActive':
+            $init->adminActive();
+            break;
         case 'candAcceptOrgReq':
             $init->candAcceptOrgReq();
             break;
         case 'candDeclineOrgReq':
             $init->candDeclineOrgReq();
+            break;
+        case 'delCandJobApp':
+            $init->delCandJobApp();
             break;
         case 'applyForJob':
             $init->applyForJob();
@@ -941,8 +1003,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'rescheIntCand':
             $init->rescheIntCand();
             break;
-        case 'edit_profile':
-            $init->edit_profile();
+        case 'removeInter':
+            $init->removeInter();
             break;
         default:
         redirect("../views/home.php");
@@ -965,12 +1027,7 @@ else{
         case 'checkCandDupEmail':
             $init->checkCandDupEmail();
             break;
-        case 'removeInter':
-            $init->removeInter();
-            break;
-        case 'settings':
-            $init->settings();
-            break;
+        
         default:
         redirect("../views/home.php");
     }

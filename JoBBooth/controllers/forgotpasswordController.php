@@ -79,10 +79,39 @@ else{
     popUp("loginRed", "Invalid token");
     redirect("../views/home.php");
 
-}}
+  }
+}
 
 
+// public function current_password(){
+        
+//     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+   
+//     $data =[
+//         'currPass'=>trim($_POST['currPass']),
+//         'pwd' => trim($_POST['Pwd']),
+//         'confPwd' => trim($_POST['ConfPwd'])
+//     ];
 
+  
+
+//     $data['currPass'] = password_hash($data['currPass'], PASSWORD_DEFAULT);
+//     $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
+
+//     if($this->frgtPwdM->current_password($data)){
+       
+//         popUp("loginGreen", "Password changed");
+//         redirect("../views/home.php");
+    
+
+//     }
+
+// else{
+//     popUp("loginRed", "Invalid token");
+//     redirect("../views/home.php");
+
+//   }
+// }
 
 
 }
@@ -96,7 +125,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             break;
         case 'changepassword':
             $init->change_password();
-            break;
+            break;            
         default:
             redirect("../views/home.php");}
 

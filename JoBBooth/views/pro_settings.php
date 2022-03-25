@@ -38,20 +38,15 @@ if(!isset($_SESSION['username'])){
     <div class="candJobReqTable">
 
     <div class="candProfileEditContainer">
-            <form action="../controllers/userController.php" method="post" enctype="multipart/form-data">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="type" value="editProfileCand">
 
                 <fieldset class="fileUpload">
                     <legend>Profile Photo</legend>
-                    <!-- <img class='proPicEdit' src="../material/images/dafault_pro_pic.jpg" alt=""> -->
-                <?php if(isset($_SESSION['pp'])){
-                    echo "<div class='proPicEditCont'></div>";
-                }
-                else{
-                    echo "<div id='generatedProPicEdit'></div>";
-                }
-                
-                ?>
+                    <img class='proPicEdit' src="../material/images/dafault_pro_pic.jpg" alt="">
+                <?php if(isset($_SESSION['proPic'])){
+                    // echo "<embed class='proPicEdit' src='data:image/png;base64,".base64_encode($_SESSION['proPic']->profile_photo)."'/>";
+                }?>
 
                 <input type="file" name="proPic" id="proPic" required/>
                 <label class="customUploadBtn" for="proPic">Choose File </label>
@@ -115,12 +110,6 @@ if(!isset($_SESSION['username'])){
         </div>
       
         <script>
-
-            //profile pic
-            var proPic = $('.proPicEditCont');
-            $.get("../controllers/searchDataController.php?q=getProPic").done(function(data){
-              proPic.html(data);
-            });
 
             //email,contact,username and pwd validation
             $("#candEmail").keyup(function(){
@@ -907,12 +896,6 @@ function checkPwdStrength(){
             });
 
         });
-
-        $(document).ready(function(){
-            var firstName = "<?php echo $_SESSION['fName']?>";
-            let initials = firstName.charAt(0).toUpperCase();
-            document.getElementById("generatedProPicEdit").innerHTML = initials;
-          });
 
     </script>
 

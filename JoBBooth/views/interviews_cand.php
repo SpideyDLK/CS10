@@ -34,7 +34,7 @@ if(!isset($_SESSION['username'])){
             </table>
         </div>
 
-        <div class="interviewForm" id="interviewForm">
+    <div class="interviewForm" id="interviewForm">
     <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
     <input type="hidden" name="type" value="rescheIntCand">
     <i id="closeBtn" class="far fa-times-circle"></i>

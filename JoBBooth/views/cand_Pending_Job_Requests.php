@@ -39,7 +39,11 @@ if(!isset($_SESSION['username'])){
 
     </table>
     </div>
+
     <div class="tabContent" id="tab2">
+    <table class="candJobAppTable">
+
+    </table>
     </div>
 
     <?php $uName = $_SESSION['username'] ?>
@@ -47,6 +51,7 @@ if(!isset($_SESSION['username'])){
 
     <script>
             var tableContainer = $(".candJobReqTable");
+            var tableContainer2 = $(".candJobAppTable");
             var uName = "<?php echo $uName ?>";
 
 
@@ -68,6 +73,10 @@ if(!isset($_SESSION['username'])){
         $( document ).ready(function() {
             $.get("../controllers/searchDataController.php?q=candAllJobReqs", {uName:uName}).done(function(data){
                     tableContainer.html(data);    
+            });
+
+            $.get("../controllers/searchDataController.php?q=candJobApp", {uName:uName}).done(function(data){
+                    tableContainer2.html(data);    
             });
         });
 
