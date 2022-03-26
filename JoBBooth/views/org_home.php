@@ -86,22 +86,179 @@ if(!isset($_SESSION['username'])){
             </form> 
         </div>
 
-        <div class="jobContainer">
+
         
-      <div class="slideshow-container">
-        
-      
+
+        <div class="searchResultsOrgHome">
+          <div class="jobAppHeading"><h>Pending Job Applications</h></div>
+      <div class="pendingJobAppContainer">
+          <table class="pendingJobApp">
+          <tr>
+                  <th>Profile Photo</th>
+                  <th>Candidate's Name</th>
+                  <th>Interested Job Position(s)</th>
+                  <th>Level of Education</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>Financial Accountant</td>
+                  <td>Undergraduate</td>
+                  <td><a href="view_pending_cand_org.php">View Candidate</a></td>
+                </tr>
+                
+            </table>
       </div>
-      
+
+      </div>
+
+
+        <div class="pendingJobReqContainerOuter">
+            <div class="jobReqHeading"><h>Recruiter's List</h></div>
+        <div class="pendingJobReqContainer">
+            <table class="pendingJobReq">
+                <tr>
+                  <th>Profile Photo</th>
+                  <th>Candidate's Name</th>
+                  <th>Rating</th>
+                  <th>Feedback</th>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.5</td>
+                  <td></td>
+                </tr>
+                
+              </table>
         </div>
 
-
+        </div>
         
 
-        
-        
+        <div class="pendingIntContainerOuter">
+            <div class="pendIntHeading"><h>Interviewer's List</h></div>
+            <div class="pendingIntContainer">
+            <table class="pendingInterviews">
+                <tr>
+                  <th>Profile Photo</th>
+                  <th>Candidate's Name</th>
+                  <th>Rating</th>
+                  <th>Feedback</th>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.9</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                  <td>User</td>
+                  <td>4.9</td>
+                  <td></td>
+                </tr>
+                  <tr>
+                    <td><img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture"></td>
+                    <td>User</td>
+                    <td>4.9</td>
+                    <td></td>
+                  </tr>
+              </table>
+        </div>
 
-        
+        </div>
 
         <script>
           $(document).ready(function(){
@@ -148,15 +305,6 @@ if(!isset($_SESSION['username'])){
             var firstName = "<?php echo $_SESSION['fName']?>";
             let initials = firstName.charAt(0).toUpperCase();
             document.getElementById("generatedProPic").innerHTML = initials;
-          });
-
-          $( document ).ready(function() {
-            var container = $(".slideshow-container");
-            
-            $.get("../controllers/searchDataController.php?q=orgDashboard", {}).done(function(data){
-              container.html(data);     
-            });         
-            
           });
           
 

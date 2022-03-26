@@ -65,4 +65,17 @@ class frgtPwdModel{
 
      }
 
+     public function current_password($data){
+         
+        $this->DB->sql("UPDATE users SET password = :pwd WHERE email = :email");
+        $this->DB->bind(':email',$data['email']);
+        $this->DB->bind(':pwd',$data['pwd']);
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+
+     }
+
 }
