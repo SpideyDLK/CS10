@@ -346,7 +346,20 @@ class userModel{
 
     }
 
-    public function settings($uname){
+    public function settings_org($uname){
+        $this->DB->sql('SELECT * FROM organization WHERE org_username=:uname');
+
+        $this->DB->bind(':uname',$uname);
+        $rows = $this->DB->single();
+        
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }
+        else{
+            return false;
+        }
+    }
+    public function settings_cand($uname){
         $this->DB->sql('SELECT * FROM candidate WHERE cand_username=:uname');
 
         $this->DB->bind(':uname',$uname);
@@ -367,6 +380,18 @@ class userModel{
         $this->DB->bind(':uname',$_SESSION['username']);
         if($this->DB->execute()){
             return true;
+        }else{
+            return false;
+        }
+    }
+    public function getProPic($uName){
+        $this->DB->sql('SELECT profile_photo FROM users WHERE username = :uname');
+        $this->DB->bind(':uname',$uName);
+
+        $rows = $this->DB->single();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
         }else{
             return false;
         }
@@ -418,6 +443,28 @@ class userModel{
         }else{
             return false;
         }
+    }
+    public function edit_profile_org_data($data){
+        $this->DB->sql('UPDATE organization SET company_name = :compName, company_reg_no = :crn, company_website = :website, address_line1 = :al1, address_line2 = :al2,street_name = :strt,
+        city = :city, email = :email, telephone_no = :tele WHERE org_username = :uName');
+
+        $this->DB->bind(':compName',$data['compName']);
+        $this->DB->bind(':crn',$data['crn']);
+        $this->DB->bind(':website',$data['website']);
+        $this->DB->bind(':al1',$data['al1']);
+        $this->DB->bind(':al2',$data['al2']);
+        $this->DB->bind(':strt',$data['strt']);
+        $this->DB->bind(':city',$data['city']);
+        $this->DB->bind(':email',$data['orgEmail']);
+        $this->DB->bind(':tele',$data['tele']);
+        $this->DB->bind(':uName',$_SESSION['username']);
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+
+        
     }
 
     public function editProCandViewData(){
@@ -481,6 +528,38 @@ class userModel{
         }
 
     }
+    public function adminNoOfUsers(){
+        $this->DB->sql('SELECT COUNT(*) AS userCount, user_role FROM users GROUP BY user_role;');
+
+        $rows=$this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }
+        else{
+            return false;
+        }
+    }
+    public function adminDeact($username){
+        $this->DB->sql('UPDATE users SET account_status="Suspended" WHERE username = :username');
+        $this->DB->bind(':username',$username);
+
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function adminActive($username){
+        $this->DB->sql('UPDATE users SET account_status="Active" WHERE username = :username');
+        $this->DB->bind(':username',$username);
+
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public function publishAd($data,$name,$type,$size,$datafile){
         $this->DB->sql('INSERT INTO advertisement (ad_title,job_title,job_type,description,skills,frequency,rate,duration,from_date,org_username)
@@ -523,6 +602,18 @@ class userModel{
             return false;
         }
     }
+    public function candCancelJobApp($data){
+        $this->DB->sql('DELETE FROM ad_responses WHERE id = :id');
+
+        $this->DB->bind(':id',$data['id']);
+
+        if($this->DB->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public function editAd($data,$name,$type,$size,$datafile){
         $this->DB->sql('UPDATE advertisement SET ad_title=:adTitle, job_title=:jobTitle, job_type=:jobType,description=:desc,
         skills=:skills,frequency=:freq,rate=:rate,duration=:duration,status="Published" WHERE ref_no = :refNo');
@@ -560,6 +651,8 @@ class userModel{
         }
     }
 
+    
+
     public function orgSendJobReqCand($data){
         $this->DB->sql('INSERT INTO org_send_job_req_cand (org_username,cand_username,job_position,salary,salary_freq,job_type,description,date)
         VALUES (:orgUname,:candUname,:jobPos,:salary,:freq,:jobType,:desc,:date)');
@@ -581,14 +674,15 @@ class userModel{
     }
 
     public function scheIntOrg($data){
-        $this->DB->sql('INSERT INTO interviews (cand_username,org_username,int_username,date,time,link)
-        VALUES(:candUname,:orgUname,:intUname,:date,:time,:link)');
+        $this->DB->sql('INSERT INTO interviews (cand_username,org_username,int_username,date,time,link,job_title)
+        VALUES(:candUname,:orgUname,:intUname,:date,:time,:link,:jobTitle)');
         $this->DB->bind(':orgUname',$data['orgUname']);
         $this->DB->bind(':candUname',$data['candUname']);
         $this->DB->bind(':intUname',$data['intUname']);
         $this->DB->bind(':date',$data['date']);
         $this->DB->bind(':time',$data['time']);
         $this->DB->bind(':link',$data['link']);
+        $this->DB->bind(':jobTitle',$data['jobTitle']);
 
         if($this->DB->execute()){
             return true;

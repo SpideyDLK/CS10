@@ -73,7 +73,7 @@ if(!isset($_SESSION['username'])){
           <div class="orgNavBar">
             <a href="interviews_cand.php"><i class="far fa-handshake"></i>  Interviews</a>
             <a href="cand_Pending_Job_Requests.php"><i class="fas fa-briefcase"></i> Jobs</a>
-            <a href="../controllers/userController.php?q=settings"> <i class="fas fa-cog"></i></i> Settings</a>
+            <a href="../controllers/userController.php?q=settings_cand"> <i class="fas fa-cog"></i></i> Settings</a>
             <!-- <a href="reg_interviewer.php">Register an Interviewer</a> -->
         </div>
                 </div>
@@ -90,171 +90,13 @@ if(!isset($_SESSION['username'])){
                 </div>
             </form> 
             </div>
-
-        <div class="pendingJobReqContainerOuter">
-            <div class="jobReqHeading"><h>Pending Job Requests</h></div>
-        <div class="pendingJobReqContainer">
-            <table class="pendingJobReq">
-                <tr>
-                  <th>Profile Photo</th>
-                  <th>Organization Name</th>
-                  <th>Job Position</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                <tr>
-                  <td><img id="proPic" src="../material/images/LOGO.png" alt="Profile Picture"></td>
-                  <td>JoBBooth Inc.</td>
-                  <td>Financial Accountant</td>
-                  <td><a href="../views/respond_req_cand.php">View Job</a></td>
-                </tr>
-                
-                
-              </table>
-        </div>
-
-        </div>
+       
+        <div class="jobContainer">
         
+          <div class="slideshow-container">
 
-        <div class="pendingIntContainerOuter">
-            <div class="pendIntHeading"><h>Pending Interviews</h></div>
-            <div class="pendingIntContainer">
-            <table class="pendingInterviews">
-                <tr>
-                  <th>Organization Name</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Link</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                <tr>
-                  <td>JobBooth Inc.</td>
-                  <td>2022-01-22</td>
-                  <td>9.00 AM</td>
-                  <td><a href="#">Click Here</a></td>
-                  <td><a href="#">Accept</a><br><a href="#">Decline</a></td>
-                  <td><a href="resch_req_cand.php">Reschedule</a></td>
-                </tr>
-                
-                
-                
-              </table>
+           </div>       
         </div>
-
-        </div>
-        
         
         <script>
 
@@ -307,6 +149,15 @@ if(!isset($_SESSION['username'])){
             var firstName = "<?php echo $_SESSION['fName']?>";
             let initials = firstName.charAt(0).toUpperCase();
             document.getElementById("generatedProPic").innerHTML = initials;
+          });
+
+          $( document ).ready(function() {
+            var container = $(".slideshow-container");
+            
+            $.get("../controllers/searchDataController.php?q=candDashboard", {}).done(function(data){
+              container.html(data);     
+            });         
+            
           });
 
           </script>

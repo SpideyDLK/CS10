@@ -41,7 +41,7 @@ if(!isset($_SESSION['username'])){
                 <!-- <img id="proPic" src="../material/images/dafault_pro_pic.jpg" alt="Profile Picture">
                -->
                <?php if(isset($_SESSION['pp'])){
-                    echo "<embed class='proPicEdit' src='data:image/png;base64,".base64_encode($_SESSION['pp'])."'/>";
+                    echo "<div class='proPicEditCont'></div>";
                 }else{
                     echo "<div id='generatedProPic'></div>";
                 }?>
@@ -49,12 +49,8 @@ if(!isset($_SESSION['username'])){
                 <h><?php if(isset($_SESSION['fName'])){
                   echo $_SESSION['fName'];
                   }?></h>
-                  <div class="moreDropDown">
-                  <div class="moreBtn"><a href=""></a><span class="arrowDownIcon"><i id="userSettingsIcon" class="fas fa-user-cog"></i></span></div>
-                  <div class="moreDropDown-content">
-                        <a href="org_edit_pro.php"><i class="fas fa-user-edit"></i> Edit Profile</a>
-                        <a href="../controllers/userController.php?q=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                  </div>
+                  <div class="logOutBtn" >
+                  <a href="../controllers/userController.php?q=logout"> <span><i class="fas fa-sign-out-alt"></i> Logout</span> </a>
                   </div>
             </div>
         </div>
@@ -67,7 +63,7 @@ if(!isset($_SESSION['username'])){
             <a href="../views/org_jobs.php"><i class="fas fa-briefcase"></i> Jobs</a>
             <!-- <a href="publish_ad.php">Publish Ad</a> -->
             <a href="hire_rec.php"> <i class="fas fa-user-plus"></i> Hire a Recruiter</a>
-            <a href="#"> <i class="fas fa-cog"></i></i> Settings</a>
+            <a href="../controllers/userController.php?q=settings_org"> <i class="fas fa-cog"></i></i> Settings</a>
             <!-- <a href="reg_interviewer.php">Register an Interviewer</a> -->
         </div>
   
@@ -104,6 +100,12 @@ if(!isset($_SESSION['username'])){
         
 
         <script>
+          //profile pic
+          var proPic = $('.proPicEditCont');
+            $.get("../controllers/searchDataController.php?q=getProPic").done(function(data){
+              proPic.html(data);
+            });
+            
           $(document).ready(function(){
             //search suggestions
             $('.searchVacancy input[type="text"]').on("keyup input",function(){

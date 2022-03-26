@@ -166,7 +166,7 @@ class userController{
         else{
             echo "<p><i class='fas fa-clipboard-list'></i>&nbsp;&nbsp;Most Searched Skills: ";
             for($x=0; $x<count($rows);$x++){
-                echo "<button type='button'>".$rows[$x]->skill."</button> ";
+                echo "<button type='button'>".$rows[$x]->skill."</button> &nbsp;&nbsp";
             }
             echo "</p>";
         }
@@ -179,7 +179,7 @@ class userController{
         else{
             echo "<p><i class='fas fa-briefcase'></i>&nbsp;Most Searched Job Positions: ";
             for($x=0; $x<count($rows);$x++){
-                echo "<button type='button'>".$rows[$x]->job_position."</button> ";
+                echo "<button type='button'>".$rows[$x]->job_position."</button> &nbsp;&nbsp";
             }
             echo "</p>";
         }
@@ -649,6 +649,153 @@ class userController{
             }
         }
     }
+    public function viewSelectedCand(){
+        if(isset($_REQUEST["uName"])){
+            unset($_SESSION['cvDetails']);
+            $uName = $_REQUEST["uName"];
+            $rows = $this->searchM->viewCand($uName);
+            $cv = $this->searchM->getCV($uName);
+            
+            // $jobReqExist = $this->searchM->jobReqExist($uName,$_SESSION['username']);
+
+            if($cv){
+                $_SESSION['cvDetails'] = $cv;
+            }
+
+            if($rows){
+                if($rows->profile_photo){
+                    echo '<div class="col1-viewAd">
+                <img id="proPic" src="data:image/jpeg;base64,'.base64_encode($rows->profile_photo).'"/>';
+                }else{
+                    echo '<div class="col1-viewAd">
+                    <div id="generatedProPic"></div>';
+                }
+                
+                if($cv){
+                    echo '<br>
+                    <a id="cvDownBtn"  href="../helpers/downloadCV.php"><i class="fas fa-download"></i> Download CV</a>';
+                }
+
+                
+        echo '
+        <p onclick="openReportForm()" class="reportBtn"><i class="fas fa-flag"></i> Report</p>
+        </div>
+
+        <div class="col2-viewAd">
+            <fieldset>
+                <legend>Personal Details</legend>
+            <div class="persDet-viewCand" id="persDet-viewCand">
+                <table class="viewCand-table">
+                <tr>
+                <td class="icons"><i class="fas fa-signature"></i></td><td class="title">Name: </td><td>'.$rows->first_name. ' '.$rows->last_name.'</td>
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-map-marker-alt"></i></td><td class="title">District: </td><td>'.$rows->district.'</td>
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-map-marker-alt"></i></td><td class="title">City: </td><td>'.$rows->city.'</td>
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-at"></i></td><td class="title">E-mail: </td><td>'.$rows->email.'</td>
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-phone"></i></td><td class="title">Contact No.: </td><td>'.$rows->contact_no.'</td>
+                </tr>
+                </table>
+            </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Professional Details</legend>
+            <div>
+            <table class="viewCand-table2">
+                <tr>
+                <td class="icons"><i class="fas fa-business-time"></i></td><td class="title">Work Experience: </td><td>'.$rows->work_experience.'</td>
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-building"></i></td><td class="title">Current Company: </td><td>';
+                if($rows->current_company){
+                    echo ''.$rows->current_company.'</td>';
+                }
+                else{
+                    echo '-NA-';
+                }
+                echo '
+                </tr>
+                <tr>
+                <td class="icons"><i class="fas fa-briefcase"></i></td><td class="title">Current Designation: </td><td>';
+                if($rows->current_designation){
+                    echo ''.$rows->current_designation.'</td>';
+                }
+                else{
+                    echo '-NA-';
+                }
+                echo '
+                </tr>
+            </table>
+            </div>
+            </fieldset>
+            
+        </div>
+
+        <div class="col3-viewAd">
+            <fieldset>
+                <legend>Interested Job Position(s)</legend>
+            <div class="jobPos-viewCand" id="jobPos-viewCand">
+            '.$rows->jobPos.'
+                
+            </div>
+            </fieldset>
+            <fieldset>
+                <legend>Skills</legend>
+            <div class="jobPos-viewCand" id="jobPos-viewCand">
+            '.$rows->skills.'
+                
+            </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Education</legend>
+            <div  id="lvlEdu-viewCand">
+            <table class="viewCand-table2">
+                <tr>
+                <td class="icons"><i class="fas fa-user-graduate"></i></td><td>'.$rows->level_of_education.'</td>
+                </tr>
+                ';
+                if($rows->level_of_education != "G.C.E. Ordinary Level" && $rows->level_of_education != "G.C.E. Advanced Level"){
+                    echo '
+                    <tr>
+                    <td class="icons"><i class="fas fa-graduation-cap"></i></td><td>'.$rows->deg_cert_or_dip_title.'</td>
+                    </tr>
+                    <tr>
+                    <td class="icons"><i class="fas fa-university"></i></td><td>'.$rows->uni_or_institute.'</td>
+                    </tr>';
+                }
+                echo '
+            </table>
+            </div>
+            </fieldset>
+            ';
+            // if($jobReqExist){
+            //     echo '<button class="cancelReqBtn-viewCand" onclick="openAlert()" type="submit">CANCEL JOB REQUEST</button>';
+            // }else{
+            //     echo '<button class="sendReqBtn-viewCand" onclick="openForm()" type="submit">SEND JOB REQUEST</button>';
+            // }
+            echo '
+        </div>
+        <input type="hidden" id="fName" value="'.$rows->first_name.'">
+        <script>
+        $(document).ready(function(){
+            var firstName = document.getElementById("fName").value;
+            let initials = firstName.charAt(0).toUpperCase();
+            document.getElementById("generatedProPic").innerHTML = initials;
+        });
+        </script>
+        
+        ';
+            }
+        }
+    }
     public function viewAd(){
         if(isset($_REQUEST["refNo"])){
             unset($_SESSION['flyerDetails']);
@@ -763,6 +910,59 @@ class userController{
             }
         }
     }
+    public function candJobApp(){
+        if(isset($_REQUEST['uName'])){      // REQUEST will return both GET and POST values
+            $uName = $_REQUEST['uName'];
+        }
+
+        $rows = $this->searchM->candJobApp($uName);
+        if($rows){
+            echo '<tr>
+            <th><i class="fas fa-signature"></i> Oraganization\'s Name</th>
+            <th><i class="fas fa-briefcase"></i> Job Position</th>
+            <th><i class="fas fa-briefcase"></i> Job Type</th>
+            <th><i class="fas fa-coins"></i> Salary</th>
+            <th></th>
+          </tr>';
+          for($x=0;$x<count($rows);$x++){
+              echo '<tr>
+              <td>'.$rows[$x]->company_name.'</td>
+              <td>'.$rows[$x]->job_title.'</td>
+              <td>'.$rows[$x]->job_type.'</td>
+              <td>'.$rows[$x]->rate. ' LKR ' .$rows[$x]->salary_freq.'</td>
+             
+              <td>
+              
+              <button class="candJobAppcancelBtn-viewAd" onclick="openAlert()" type="submit">Delete</button>
+
+              
+                 <div class="areYourSureMsg" id="areYourSureMsg">
+                 <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
+                 <input type="hidden" name="type" value="candCancelJobApp">                
+                <input type="hidden" name="id" value="'.$rows[$x]->id.'">
+                 <h><i class="fas fa-exclamation"></i> Are you sure you to remove the job application?</h><br>
+                 <button class="yesBtn" type="submit">Yes</button>
+                 <button class="noBtn" type="button">No</button>
+                 </form>
+                 </div>
+    
+              </td>
+
+              </tr>
+              
+              <script>
+              $(".noBtn").on("click",function(){
+                $("#areYourSureMsg").hide();
+               });
+
+              function openAlert() {
+                document.getElementById("areYourSureMsg").style.display = "block";
+                }
+              </script>
+              ';
+          }
+        }
+    }
 
     public function jobReqCount(){
         if(isset($_REQUEST['uName'])){
@@ -832,6 +1032,7 @@ class userController{
             <th><i class="fas fa-briefcase"></i> Job Type</th>
             <th><i class="fas fa-coins"></i> Salary</th>
             <th><i class="fas fa-eye"></i> Status</th>
+            <th></th>
           </tr>';
           for($x=0;$x<count($rows);$x++){
               echo '<tr>
@@ -839,7 +1040,13 @@ class userController{
               <td>'.$rows[$x]->job_position.'</td>
               <td>'.$rows[$x]->job_type.'</td>
               <td>'.$rows[$x]->salary. ' LKR ' .$rows[$x]->salary_freq.'</td>
-              <td>'.$rows[$x]->status.'</td>
+              <td>'.$rows[$x]->status.'</td>';
+              if($rows[$x]->status=="Accepted"){
+                  echo'<td><a target="_blank" href="../views/view_accepted_cand_org.php?uName='.$rows[$x]->cand_username.'">View Candidate</a></td>';
+              }else{
+                  echo '<td></td>';
+              }
+              '
               </tr>';
           }
         }
@@ -859,7 +1066,12 @@ class userController{
             <th><i class="fas fa-briefcase"></i> Job Position</th>
             <th><i class="fas fa-briefcase"></i> Job Type</th>
             <th><i class="fas fa-coins"></i> Salary</th>
-            <th><i class="fas fa-eye"></i> Status</th>
+            <th><i class="fas fa-eye"></i> Status</th>';
+            if($status=="Accepted"){
+                echo '<th></th>';
+            }
+            '
+            <th></th>
           </tr>';
           for($x=0;$x<count($rows);$x++){
               echo '<tr>
@@ -867,7 +1079,12 @@ class userController{
               <td>'.$rows[$x]->job_position.'</td>
               <td>'.$rows[$x]->job_type.'</td>
               <td>'.$rows[$x]->salary. ' ' .$rows[$x]->salary_freq.'</td>
-              <td>'.$rows[$x]->status.'</td>
+              <td>'.$rows[$x]->status.'</td>';
+              if($status=='Accepted'){
+                echo '<td><a target="_blank" href="../views/view_accepted_cand_org.php?uName='.$rows[$x]->cand_username.'">View Candidate</a></td>';
+              }
+              '
+              
               </tr>';
           }
         }
@@ -1031,6 +1248,33 @@ class userController{
             
         }
     }
+    public function selectedList(){
+        $uName = $_SESSION['username'];
+        $rows = $this->searchM->selectedList($uName);
+
+        if($rows){
+            echo '<tr>
+            <th><i class="fas fa-user-tie"></i> Interviewer Name</th>
+            <th><i class="fas fa-user"></i> Candidate Name</th>
+            <th><i class="fas fa-briefcase"></i> Job Position</th>
+            <th><i class="fas fa-star"></i> Rating</th>
+            <th><i class="fas fa-comment"></i> Feedback</th>
+            <th></th>
+          </tr>';
+            for($x=0;$x<count($rows);$x++){
+                echo '<tr>
+                <td>'.$rows[$x]->int_name.'</td>
+                <td>'.$rows[$x]->cand_name.'</td>
+                <td>'.$rows[$x]->job_title.'</td>
+                <td>'.$rows[$x]->rate.'</td>
+                <td>'.$rows[$x]->feedback.'</td>
+                <td><a target="_blank" href="../views/view_selected_candidate_org.php?uName='.$rows[$x]->cand_username.'">View Candidate</a></td>
+                </tr>
+                ';
+            }
+            
+        }
+    }
 
     public function candAllJobReqs(){
         if(isset($_REQUEST['uName'])){
@@ -1171,23 +1415,79 @@ class userController{
     public function viewAllUsers(){
         $rows = $this->searchM->viewAllUsers();
 
+
         if($rows){
             echo '<tr>
             <th><i class="fas fa-user"></i> Username</th>
             <th><i class="fas fa-user-tag"></i> User Role</th>
             <th><i class="fas fa-flag"></i> Account Status</th>
-            <th></th>
-          </tr>
-            
-            ';
+            <th></th>';
+
             for($x=0;$x<count($rows);$x++){
                 echo '<tr>
                 <td>'.$rows[$x]->username.'</td>
                 <td>'.$rows[$x]->user_role.'</td>
                 <td>'.$rows[$x]->account_status.'</td>
-                <td>abc</td>
-              </tr>
-                ';
+
+            <td>';
+            if($rows[$x]->account_status=="Active"){
+                echo '<form action="../controllers/UserController.php" method="post">
+                <input type="hidden" name="type" value="adminDeact">
+                <input type="hidden" name="username" value="'.$rows[$x]->username.'">
+                <button type="submit" id="adminDeact"><i class="fas fa-times-circle"></i> DEACTIVATE</button>
+                <style>
+                #adminDeact{
+                    color: white;
+                    background-color: teal;
+                    border: none;
+                    width: 85%;
+                    height: 30px;
+                    font-family: body;
+                    font-weight: bold;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 10px;
+
+                #adminDeact:hover{
+                    color: teal;
+                    background-color: white;
+                }    
+                    
+                }
+                </style>
+                </form>';
+            }else{
+                echo '<form action="../controllers/UserController.php" method="post">
+                <input type="hidden" name="type" value="adminActive">
+                <input type="hidden" name="username" value="'.$rows[$x]->username.'">
+                <button type="submit" id="adminActive"><i class="fas fa-check-circle"></i> ACTIVATE</button>
+                <style>
+                #adminActive{
+                    color: white;
+                    background-color: red;
+                    border: none;
+                    width: 85%;
+                    height: 30px;
+                    font-family: body;
+                    font-weight: bold;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 10px;
+                    
+                }
+
+                #adminActive:hover{
+                    color: red;
+                    background-color: white;
+                }
+
+                </style>
+                </form>';
+            }
+            echo '</td>
+            
+            </tr>';
+
             }
         }
     }
@@ -1338,7 +1638,41 @@ class userController{
                 <td>'.$rows[$x]->city.', '.$rows[$x]->district.'</td>
                 <td>'.$rows[$x]->work_experience.'</td>
                 <td>'.$rows[$x]->level_of_education.'</td>
-                <td><a target="_blank" href="../views/view_responded_cand_org.php?uName='.$rows[$x]->cand_username.'">View Candidate</a></td>
+                <td><a target="_blank" href="../views/view_responded_cand_org.php?uName='.$rows[$x]->cand_username.'&job_title='.$rows[$x]->job_title.'">View Candidate</a></td>
+              </tr>
+                ';
+            }
+
+        }
+    }
+    public function viewAdCand(){
+        if(isset($_REQUEST['refNo'])){
+            $refNo = $_REQUEST['refNo'];
+        }
+        $rows = $this->searchM->viewAdCand($refNo);
+
+        if($rows){
+            echo '<table class="hireRecTable">
+            <tr>
+            
+            <th><i class="fas fa-signature"></i> Ad Title</th>
+            <th><i class="fas fa-business-time"></i> Profile Photo</th>
+            <th><i class="fas fa-map-marker-alt"></i> Organization</th>
+            <th><i class="fas fa-graduation-cap"></i> Job Title</th>
+            <th><i class="fas fa-graduation-cap"></i> Duration</th>
+            <th><i class="fas fa-graduation-cap"></i> Frequency</th>
+            <th></th>
+          </tr>
+            ';
+            for($x=0;$x<count($rows);$x++){
+                echo '<tr>
+                <td>'.$rows[$x]->ad_title.'</td>
+                <td>'.$rows[$x]->profile_photo.'</td>
+                <td>'.$rows[$x]->company_name.'</td>
+                <td>'.$rows[$x]->job_title.'</td>
+                <td>'.$rows[$x]->duration.'</td>
+                <td>'.$rows[$x]->frequency.'</td>
+                <td><a target="_blank" href="../views/view_responded_cand_org.php?uName='.$rows[$x]->cand_username.'&job_title='.$rows[$x]->job_title.'">View Ad</a></td>
               </tr>
                 ';
             }
@@ -1477,6 +1811,8 @@ class userController{
             }
     }
 
+    
+
     public function orgDashboard(){
         $uName = $_SESSION['username'];
         $rows = $this->searchM->orgDashboard($uName);
@@ -1526,13 +1862,95 @@ class userController{
             // }
     }
 
+    public function candDashboard(){
+        $uName = $_SESSION['username'];
+        
+        $allAds = $this->searchM->viewAllads();
+        // if(isset($rows)){
+            
+            if($allAds){
+                echo '
+                    <div class="recentW">
+                    <h2><i class="fas fa-chart-line"></i> Advertisements
+                        
+                    </h2>
+                    </div>';
+
+                for ($x=0;$x<count($allAds);$x++){ 
+
+                    $jobTitle = '%'.$allAds[$x]->job_title.'%';
+                    $rows = $this->searchM->candDashboard($jobTitle,$uName);
+                    if($rows){
+
+                        echo '<div class="candDashAd">
+                    <form method="POST" action="../views/candAdDash.php?refNo='.$allAds[$x]->ref_no.'" target="_blank">
+                    <input type="hidden" name="id" >
+                    </form>
+                    <table class="det">
+                      <tr>
+                      <td class="title"><i class="fas fa-signature"></i><b> Ad Title</td><td>'.$allAds[$x]->ad_title.'</td>
+                        </tr>
+                      <tr>';
+                      $initial = $allAds[$x]->company_name;
+                        $initial = substr($initial,0,1);
+                        $initial = strtoupper($initial);
+                      if($allAds[$x]->profile_photo){
+                        echo '<img id="proPic" src="data:image/jpeg;base64,'.base64_encode($allAds[$x]->profile_photo).'"/>';
+                    }
+                    else{
+                        echo '<div id="generatedProPicSearch">'.$initial.'</div>';
+                    }
+                    echo '<tr>
+                      <td class="title"><b><i class="fas fa-building"></i> Organization </b></td><td>'.$allAds[$x]->company_name.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-briefcase"></i> Job Title </b></td><td>'.$allAds[$x]->job_title.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-hourglass-half"></i> Duration </b></td><td>'.$allAds[$x]->duration.'</td>
+                      </tr>
+                      <tr>
+                      <td class="title"><b><i class="fas fa-clock"></i> Frequency </b></td><td>'.$allAds[$x]->frequency.'</td>
+                      </tr>
+                                           
+                    </table>
+                    </div>
+
+                    
+                    <script>
+                    $(".recJobs").on("click",function(){
+                        $(this).children("form").submit();
+                    });
+                    $(document).ready(function(){
+                        var firstName = "<?php echo $_SESSION[]?>";
+                        let initials = firstName.charAt(0).toUpperCase();
+                        document.getElementById("generatedProPic").innerHTML = initials;
+                      });
+                    </script>
+
+                    ';
+                }
+                    }
+                  
+                }
+                
+                
+            // else{
+            //     echo '<div class="noResult"><img id="noResult" src="../material/images/no-result.png" alt="Profile Picture"></div>';
+            //  }
+            // }
+    }
     public function getProPic(){
         $uname = $_SESSION['username'];
         $rows = $this->searchM->getProPic($uname);
         if($rows){
             echo '<embed class="proPicEdit" src="data:image/png;base64,'.base64_encode($rows->profile_photo).'"/>';
+        }else{
+            redirect("../views/home.php");
         }
     }
+
+    
 
     
     
@@ -1572,6 +1990,9 @@ switch($_GET['q']){
         break;
     case 'degSuggestions':
         $init->degSuggestions();
+        break;
+    case 'candJobApp':
+        $init->candJobApp();
         break;
     case 'orgSearchingCandRes':
         $init->orgSearchingCand();
@@ -1618,6 +2039,9 @@ switch($_GET['q']){
     case 'viewAllUsers':
         $init->viewAllUsers();
         break;
+    case 'selectedList':
+        $init->selectedList();
+        break;
     case 'viewAllRecs':
         $init->viewAllRecs();
         break;
@@ -1630,6 +2054,9 @@ switch($_GET['q']){
     case 'viewRespondedCand':
         $init->viewRespondedCand();
         break;
+    case 'viewSelectedCand':
+        $init->viewSelectedCand();
+        break;
     case 'listSchedules':
         $init->listSchedules();
         break;
@@ -1639,6 +2066,9 @@ switch($_GET['q']){
     case 'orgDashboard':
         $init->orgDashboard();
         break;
+    case 'candDashboard':
+        $init->candDashboard();
+        break;   
     case 'getProPic':
         $init->getProPic();
         break;
