@@ -297,6 +297,23 @@ class searchModel{
             return false;
         }
     }
+    public function viewAdDash($refNo){
+        $this->DB->sql('UPDATE advertisement SET no_of_views=no_of_views+1 WHERE ref_no=:refNo');
+        $this->DB->bind(':refNo',$refNo);
+
+        $this->DB->execute();
+
+        $this->DB->sql('SELECT * FROM vacancyview WHERE ref_no = :refNo');
+        $this->DB->bind(':refNo',$refNo);
+
+        $rows = $this->DB->single();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
     public function getCV($uName){
         $this->DB->sql('SELECT * FROM cv_files WHERE cand_username = :uname');
         $this->DB->bind(':uname',$uName);
@@ -387,6 +404,18 @@ class searchModel{
             return false;
         }
     }
+    public function CandJobApp($uName){
+        $this->DB->sql('SELECT id,company_name,job_title,job_type,rate,frequency FROM cand_job_app_view WHERE cand_username=:uName');
+        $this->DB->bind(':uName',$uName);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
     public function JobReqsFiltered($uName,$status){
         $this->DB->sql('SELECT * FROM job_requests_view WHERE org_username=:uName AND status=:status');
         $this->DB->bind(':uName',$uName);
@@ -437,6 +466,20 @@ class searchModel{
             return false;
         }
     }
+    
+    public function selectedList($uName){
+        $this->DB->sql('SELECT * FROM interview_schedule_view WHERE org_username = :uName');
+        $this->DB->bind(':uName',$uName);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+    }
+
     public function CandAllJobReqs($uName){
         $this->DB->sql('SELECT * FROM job_requests_view WHERE cand_username=:uName');
         $this->DB->bind(':uName',$uName);
@@ -569,6 +612,21 @@ class searchModel{
 
     }
 
+    public function viewAdCand($refNo){
+        $this->DB->sql('SELECT * FROM vacanyview WHERE ref_no = :refNo');
+        $this->DB->bind(':refNo',$refNo);
+
+        $rows = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $rows;
+        }else{
+            return false;
+        }
+
+    }
+
+    
     public function listSchedules($uname){
         $this->DB->sql('SELECT * FROM interview_schedule_view WHERE org_username = :orgUname ORDER BY date');
         $this->DB->bind(':orgUname',$uname);
@@ -605,6 +663,33 @@ class searchModel{
             return false;
         }
     }
+    public function candDashboard($jobTitle,$uName){
+        $this->DB->sql('SELECT * FROM candview WHERE cand_username = :uName AND jobPos LIKE :job_title AND jobPos LIKE :job_title');
+        $this->DB->bind(':job_title',$jobTitle);
+        $this->DB->bind(':uName',$uName);
+
+        $rows = $this->DB->single();
+
+        if($this->DB->rowCount()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function viewAllAds(){
+        $this->DB->sql('SELECT * FROM vacancyview WHERE status = "Published"');
+        // $this->DB->bind(':ref_no',$ref_no);
+
+        $allAds = $this->DB->multiple();
+
+        if($this->DB->rowCount()>0){
+            return $allAds;
+        }else{
+            return false;
+        }
+    }
+
     public function getProPic($uName){
         $this->DB->sql('SELECT profile_photo FROM users WHERE username = :uname');
         $this->DB->bind(':uname',$uName);

@@ -31,8 +31,7 @@ if(!isset($_SESSION['username'])){
         <div class="tabContainer">
         <div class = "tabContainerInner">
         <button class="tabs" onclick="toggleTab('default')" id="default"><i class="fas fa-file-upload"></i> Job Requests</button>
-        <button class="tabs" onclick="toggleTab('2')" id="2"><i class="fas fa-file-download"></i> Job Applications</button>
-        <span class="glider" id="glider"></span>
+        <span class="glider1" id="glider"></span>
         </div>
     </div>
 
@@ -41,11 +40,11 @@ if(!isset($_SESSION['username'])){
             
         </div>
     <div class="orgJobReqListCont">
-          <table class="orgJobReqTable">
+        <table class="orgJobReqTable">
           
                 
                 
-            </table>
+        </table>
       </div>
 
     </div>

@@ -451,12 +451,13 @@ class userController{
             'link' => trim($_POST['intLink']),
             'intUname' => trim($_POST['selectInt']),
             'candUname' => trim($_POST['candUname']),
+            'jobTitle' => trim($_POST['jobTitle']),
             'orgUname' => trim($_SESSION['username'])
         ];
 
         if($this->userM->scheIntOrg($data)){
             $_SESSION['candUname'] = $data['candUname'];
-            redirect("../views/view_responded_cand_org.php");
+            redirect("../views/interviewers.php?tabNo=2");
         }else{
             die("Something went wrong");
         }
@@ -474,7 +475,7 @@ class userController{
 
         if($this->userM->rescheIntOrg($data)){
             // $_SESSION['candUname'] = $data['candUname'];
-            redirect("../views/interviewers.php");
+            redirect("../views/interviewers.php?tabNo=2");
         }else{
             die("Something went wrong");
         }
@@ -504,7 +505,41 @@ class userController{
             die("Something went wrong");
         }
     }
+    public function candCancelJobApp(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+        $data =[
+            'uName' => trim($_SESSION['username']),
+            'id' => trim($_POST['id'])
+        ];
+
+        if($this->userM->candCancelJobApp($data)){
+        
+            redirect("../views/cand_Pending_Job_Requests.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    // public function scheIntOrg(){
+    //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    //     $data =[
+    //         'date' => trim($_POST['intScheDate']),
+    //         'time' => trim($_POST['intScheTime']),
+    //         'link' => trim($_POST['intLink']),
+    //         'intUname' => trim($_POST['selectInt']),
+    //         'candUname' => trim($_POST['candUname']),
+    //         'jobTitle' => trim($_POST['jobTitle']),
+    //         'orgUname' => trim($_SESSION['username'])
+    //     ];
+
+    //     if($this->userM->scheIntOrg($data)){
+    //         $_SESSION['candUname'] = $data['candUname'];
+    //         redirect("../views/interviewers.php?tabNo=2");
+    //     }else{
+    //         die("Something went wrong");
+    //     }
+    // }
     public function edit_profile(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -538,7 +573,29 @@ class userController{
 
         if($this->userM->edit_profile_cand_data($data,$datafile,$name,$type,$size)){
             popUp("loginGreen", "Data Saved Successfully");
-            $this->settings();
+            $this->settings_cand();
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function edit_profile_org(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $data =[
+            'compName' => trim($_POST['compName']),
+            'crn' => trim($_POST['crn']),
+            'website' => trim($_POST['website']),
+            'al1' => trim($_POST['al1']),
+            'al2' => trim($_POST['al2']),
+            'strt' => trim($_POST['strt']),
+            'city' => trim($_POST['city']),
+            'orgEmail' => trim($_POST['orgEmail']),
+            'tele' => trim($_POST['tele'])
+        ];
+
+        if($this->userM->edit_profile_org_data($data)){
+            popUp("loginGreen", "Data Saved Successfully");
+            $this->settings_org();
         }else{
             die("Something went wrong");
         }
@@ -676,7 +733,18 @@ class userController{
         $data = file_get_contents($_FILES['proPic']['tmp_name']);
 
         if($this->userM->editProPicCand($name,$type,$data)){
-            redirect("../views/home.php");
+            $this->settings_cand();
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function editProPicOrg(){
+        $name = $_FILES['proPic']['name'];
+        $type = $_FILES['proPic']['type'];
+        $data = file_get_contents($_FILES['proPic']['tmp_name']);
+
+        if($this->userM->editProPicCand($name,$type,$data)){
+            $this->settings_org();
         }else{
             die("Something went wrong");
         }
@@ -729,13 +797,27 @@ class userController{
 
     
 
-    public function settings(){
+    public function settings_cand(){
         $uname = $_SESSION['username'];
-        $rows = $this->userM->settings($uname);
+        $rows = $this->userM->settings_cand($uname);
+        $proPic = $this->userM->getProPic($uname);
         if($rows){
             unset($_SESSION['curr_details']);
             $_SESSION['curr_details'] = $rows;
             redirect("../views/pro_settings_cand.php");
+        }else{
+            die("Something went wrong");
+        }
+
+    }
+    public function settings_org(){
+        $uname = $_SESSION['username'];
+        $rows = $this->userM->settings_org($uname);
+        $proPic = $this->userM->getProPic($uname);
+        if($rows){
+            unset($_SESSION['curr_details']);
+            $_SESSION['curr_details'] = $rows;
+            redirect("../views/pro_settings_org.php");
         }else{
             die("Something went wrong");
         }
@@ -803,6 +885,8 @@ class userController{
             $userLoggedIn = $this->userM->validatePWDAdmin($data['uname'],$data['pwd']);
 
             if($userLoggedIn){
+                $adminNoOfUsers = $this->userM->adminNoOfUsers();
+                $_SESSION['adminNoOfUsers'] = $adminNoOfUsers;
                 $_SESSION['username'] = $userLoggedIn->username;
                 $_SESSION['userRole'] = "Administrator";
                 redirect("../views/admin_home.php");
@@ -815,6 +899,27 @@ class userController{
         else{
             popUp("loginRed", "Incorrect username or password!");
             redirect("../views/login_admin.php");
+        }
+    }
+
+    public function adminDeact(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminDeact($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
+        }
+    }
+    public function adminActive(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $username = trim($_POST['username']);
+
+        if($this->userM->adminActive($username)){
+            redirect("../views/usersAdmin.php");
+        }else{
+            die("Something went wrong");
         }
     }
 
@@ -852,6 +957,8 @@ class userController{
     }
 
 }
+
+    
 
 $init = new userController;
 
@@ -893,11 +1000,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'searchRec':
             $init->searchRec();
             break;
+        case 'candCancelJobApp':
+            $init->candCancelJobApp();
+            break;
         case 'addSpecialAreaRec':
             $init->addSpecialAreaRec();
             break;
         case 'editProPicCand':
             $init->editProPicCand();
+            break;
+        case 'editProPicOrg':
+            $init->editProPicOrg();
             break;
         case 'orgSendJobReqCand':
             $init->orgSendJobReqCand();
@@ -944,6 +1057,15 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         case 'edit_profile':
             $init->edit_profile();
             break;
+        case 'edit_profile_org':
+            $init->edit_profile_org();
+            break;
+        case 'adminDeact':
+            $init->adminDeact();
+            break;
+        case 'adminActive':
+            $init->adminActive();
+            break;
         default:
         redirect("../views/home.php");
     }
@@ -968,8 +1090,11 @@ else{
         case 'removeInter':
             $init->removeInter();
             break;
-        case 'settings':
-            $init->settings();
+        case 'settings_cand':
+            $init->settings_cand();
+            break;
+        case 'settings_org':
+            $init->settings_org();
             break;
         default:
         redirect("../views/home.php");

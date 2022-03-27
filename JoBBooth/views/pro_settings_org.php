@@ -40,7 +40,7 @@ if(!isset($_SESSION['username'])){
 
     <div class="candProfileEditContainer">
             <form action="../controllers/userController.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="type" value="editProPicCand">
+                <input type="hidden" name="type" value="editProPicOrg">
 
                 <fieldset class="fileUpload">
                     <legend>Profile Photo</legend>
@@ -73,93 +73,38 @@ if(!isset($_SESSION['username'])){
             </form>
 
             <form action="../controllers/userController.php" method="post" enctype="multipart/form-data">
-            <input name="type" type="hidden" value="edit_profile">
+            <input name="type" type="hidden" value="edit_profile_org">
                 <fieldset>
-                    <legend>Personal Details</legend>
-                    <label for="fName">First Name<span class="reqStar">*</span></label>
-                    <input id="fName" name="fName" type="text" value="<?php echo $_SESSION['curr_details']->first_name; ?>"  required>
+                    <legend>Organization Details</legend>
+                    <label for="compName">Company Name<span class="reqStar">*</span></label>
+                    <input id="compName" name="compName" type="text" value="<?php echo $_SESSION['curr_details']->company_name; ?>"  required>
 
-                    <label for="lName">Last Name<span class="reqStar">*</span></label>
-                    <input id="lName" name="lName" type="text" value="<?php echo $_SESSION['curr_details']->last_name; ?>"  required>
+                    <label for="crn">CRN<span class="reqStar">*</span></label>
+                    <input id="crn" name="crn" type="text" value="<?php echo $_SESSION['curr_details']->company_reg_no  ; ?>"  required>
 
-                    <label for="nic">NIC</label>
-                    <input id="nic" name="nic" type="text" value="<?php echo $_SESSION['curr_details']->nic; ?>"  >
+                    <label for="website">Company Website</label>
+                    <input id="website" name="website" type="text" value="<?php echo $_SESSION['curr_details']->company_website; ?>"  >
 
-                    <label for="district">District<span class="reqStar">*</span></label>
-                    <input id="district" name="district" type="text" value="<?php echo $_SESSION['curr_details']->district; ?>"  required>
+                    <label for="al1">Address Line 1<span class="reqStar">*</span></label>
+                    <input id="al1" name="al1" type="text" value="<?php echo $_SESSION['curr_details']->address_line1; ?>"  required>
 
+                    <label for="al2">Address Line 2<span class="reqStar">*</span></label>
+                    <input id="al2" name="al2" type="text" value="<?php echo $_SESSION['curr_details']->address_line2; ?>"  required>
+
+                    <label for="strt">Street Name<span class="reqStar">*</span></label>
+                    <input id="strt" name="strt" type="text" value="<?php echo $_SESSION['curr_details']->street_name; ?>"  required>
+                    
                     <label for="city">City<span class="reqStar">*</span></label>
                     <input id="city" name="city" type="text" value="<?php echo $_SESSION['curr_details']->city; ?>"  required>
-
-                    <div>
-                    <label for="contact">Contact No.<span class="reqStar">*</span></label>
-                    <span class="signup-errMsg" id="errMsg"></span><br>
-                    <input id="contact" name="contact" type="text" value="<?php echo $_SESSION['curr_details']->contact_no; ?>"  required>
-                    </div>
                     
                     <div>
-                    <label for="candEmail">E-mail<span class="reqStar">*</span></label>
+                    <label for="orgEmail">E-mail<span class="reqStar">*</span></label>
                     <span class="signup-errMsg" id="errMsg"></span><br>
-                    <input id="candEmail" name="candEmail" type="text" value="<?php echo $_SESSION['curr_details']->email; ?>"  required>
+                    <input id="orgEmail" name="orgEmail" type="text" value="<?php echo $_SESSION['curr_details']->email; ?>"  required>
                     </div>
                     
-
-                    <label>Work Experience<span class="reqStar">*</span></label>
-                    <select id="workEx" class="workExEdit selectBox" name="workEx">
-                                <option value="0" selected disabled>Select:</option>
-                                <option value="1">Fresher</option>
-                                <option value="2">1-5 years</option>
-                                <option value="3">5-10 years</option>
-                                <option value="4">10-20 years</option>
-                                <option value="5">More than 20</option>
-                    </select><br><br>
-
-                    <label for="currComp">Current Company<span class="reqStar">*</span></label>
-                    <input id="currComp" name="currComp" type="text" value="<?php echo $_SESSION['curr_details']->current_company; ?>"  >
-
-                    <label for="currDesig">Current Designation<span class="reqStar">*</span></label>
-                    <input id="currDesig" name="currDesig" type="text" value="<?php echo $_SESSION['curr_details']->current_designation; ?>"  >
-
-                    <label>Level of Education<span class="reqStar">*</span></label>
-                    <select id="loe" class="eduDropDownEdit selectBox" name="eduLevel">
-                                <option value="0" selected disabled>Select:</option>
-                                <option value="1">G.C.E. Ordinary Level</option>
-                                <option value="2">G.C.E. Advanced Level</option>
-                                <option value="3">Certificate / Advanced Certificate</option>
-                                <option value="4">Diploma / Higher Diploma</option>
-                                <option value="5">Undergraduate</option>
-                                <option value="6">Bachelors / Bachelors Honours</option>
-                                <option value="7">Postgraduate Certificate / Diploma</option>
-                                <option value="8">Masters by course work / course work and a research component</option>
-                                <option value="9">MPhil / PhD / MD with Board Certification / Doctor of Letters / Doctor of Science</option>
-                    </select><br><br>
-
-                    <div class="dynamicInput1-candSignup" id="form-group-input">
-                    <label for="uniOrInstitute">University/Institute</label>
-                    <span class="signup-errMsg" id="errMsg"></span><br>
-                    <input autocomplete = "off" id="uniOrInstitute" name="uniOrInstitute" value="<?php echo $_SESSION['curr_details']->uni_or_institute; ?>" type="text">
-                    <div class="uni-suggestions-edit" id="uniSuggestions"></div>
-                    </div>
-
-                    <div class="dynamicInput2-candSignup" id="form-group-input">
-                    <label for="degreeTitle"></label>
-                    <span class="signup-errMsg" id="errMsg"></span><br>
-                    <input autocomplete = "off" id="degreeTitle" name="degreeTitle" type="text" value="<?php echo $_SESSION['curr_details']->deg_cert_or_dip_title; ?>" disabled>
-                    <div class="deg-suggestions-edit" id="degSuggestions"></div>
-                    </div>
-
-                    <label style="width:90%">Upload your CV/Resume (Optional)</label>
-                        <label for="cvInput">
-                        <div class="cvUpload" id="cvUpload">
-                        <input class="cvInput" name="cvInput" id="cvInput" type="file" accept=".pdf,">
-                        <p class="cvUploadP"><i class="fas fa-upload" id="uploadIcon"></i><br><br>Drag your CV/Resume here or click in this area.<br><br><i id="pdfIcon" class="far fa-file-pdf"></i><br><br> PDF Only (Max: 10 MB)</p>
-                        </div>
-                        </label>
-                        <div class="cvFileNameCont">
-                        <span class="signup-errMsg" id="errMsg"></span><br>
-                        <p class="fileNameCV"></p>&nbsp;
-                        <button class='fileCancelBtn' id='fileCancelBtn' type="button"><i class='far fa-times-circle'></i></button>
-                        </div>
+                    <label for="tele">Telephone No.<span class="reqStar">*</span></label>
+                    <input id="tele" name="tele" type="text" value="<?php echo $_SESSION['curr_details']->telephone_no; ?>"  required>
                     
                     <button class="saveButtonEditProfile2" type="submit">SAVE</button>
                 </fieldset>

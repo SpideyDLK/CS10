@@ -9,8 +9,9 @@ if(!isset($_SESSION['username'])){
 <html>
 
     <head>
-        <title>Interviewers | JoBBooth</title>
+        <title>Interviews | JoBBooth</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="intstyle.css">
         <!-- <link rel="icon" href="../material/images/LOGO.png" type="image/gif" sizes="5x5"> -->
         <script src="https://kit.fontawesome.com/e33a9afea3.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,39 +31,69 @@ if(!isset($_SESSION['username'])){
 
         <div class="tabContainer">
         <div class = "tabContainerInner">
-        <button class="tabs" onclick="toggleTab('default')" id="default"><i class="fas fa-user-tie"></i> Interviewers</button>
-        <button class="tabs" onclick="toggleTab('2')" id="2"><i class="far fa-calendar-alt"></i> Schedules</button>
-        <button class="tabs" onclick="toggleTab('3')" id="3"><i class="fas fa-list"></i> Selected List</button>
+        <button class="tabs" onclick="toggleTab('default')" id="default"><i class="fas fa-user-tie"></i> Interviews</button>
+        <button class="tabs" onclick="toggleTab('2')" id="2"><i class="far fa-calendar-alt"></i>Finished</button>
+        <button class="tabs" onclick="toggleTab('3')" id="3"><i class="far fa-calendar-alt"></i>Selected</button>
         <span class="glider3" id="glider"></span>
         </div>
         </div>
 
         <div class="tabContent" id="tab1">
-        <br>
-        <?php popUp('loginGreen');?>
-        <button class="addNewInter"><i class="fas fa-user-plus"></i> Add New Interviewer</button>
-        <table class="interListTable">
+        
+        <table class="interListTable1">
         
         </table>
 
         </div>
 
         <div class="tabContent" id="tab2">
-        <div class="scheduleListCont">
+        
+        <table class="finishedListTable"> 
 
-        </div>
+        </table>
+
         </div>
 
         <div class="tabContent" id="tab3">
-        <table class="selectedListTable">
         
+        <table class="selectedListTable"> 
+
         </table>
+        
         </div>
+        
+        <br>
+        <div id="viewCandCont" class="viewCandCont"></div>
+        <div id ="finishIntContainer">
+        <i id="closeBtn2" class="far fa-times-circle"></i>
+            <br>
+        <div id = "ratingContainer">
+        <h5>Rate the candidate</h5>
+            <i class="fa fa-star"  data-index="0"></i>
+            <i class="fa fa-star"  data-index="1"></i>
+            <i class="fa fa-star"  data-index="2"></i>
+            <i class="fa fa-star"  data-index="3"></i>
+            <i class="fa fa-star"  data-index="4"></i>
+        </div>
+            <div id="feedbackContainer">
+                <h5>Enter your feedback here</h5>
+            <form id="fbForm" method="post" action="../controllers/intController.php">
+            <input type="hidden" name="type" value="ratingFeedback">
+            <input id="refno" type="hidden" name="refNo" value="">
+            <input type="hidden" id="rate" name="rate" value="">
+            <input type="hidden" name="status" value="finished">
+            <textarea id="feedback" name="feedback" type="text" form="fbForm" rows="6" cols="50" ></textarea><br>
+            <button type="submit">SAVE</button>
+           
+</form>
+</div>
+</div>
+
 
         <div class="interviewForm" id="interviewForm">
-    <form id="form-container" class="form-container" method="post" action="../controllers/userController.php">
-    <input type="hidden" name="type" value="rescheIntOrg">
-    <i id="closeBtn" class="far fa-times-circle"></i>
+    <form id="form-container" class="form-container" method="post" action="../controllers/intController.php">
+    <input type="hidden" name="type" value="rescheIntInterviewer">
+    <i id="closeBtn1" class="far fa-times-circle"></i>
     <div class="heading"><h>Schedule Interview</h></div>
     <input id="refNo" type="hidden" name="refNo" value="">
     
@@ -75,34 +106,12 @@ if(!isset($_SESSION['username'])){
         <label for="intLink">Link<span class="reqStar">*</span></label>
         <textarea id="intLink" name="intLink" type="text" required></textarea>
 
-        <div>
-            <label>Select Interviewer<span class="reqStar">*</span></label>
-            <select class="selectInt" name="selectInt" required>
-                    <option value="" selected disabled>Select:</option>
-                    
-                    <?php
-                    if(isset($_SESSION['interviewers'])){
-                        for($x=0;$x<count($_SESSION['interviewers']);$x++){
-                            echo '<option value="'.$_SESSION['interviewers'][$x]->inter_username.'">'.$_SESSION['interviewers'][$x]->name.'</option>
-                            ';
-                            }
-                            unset($_SESSION['interviewers']);
-                    }
-                    ?>
-
-            </select>
-            </div>
+        
         <button type="submit">SAVE</button>
     </form>
     </div>
 
-        
-
-        
-
-
-
-    <script>
+        <script>
         function toggleTab(tabNo){
             glider = document.getElementById("glider");
             if(tabNo=="default"){
@@ -124,6 +133,13 @@ if(!isset($_SESSION['username'])){
                 glider.style.transform = "translateX(200%)";
             }
         }
+
+        var uName = "<?php 
+        if(isset($_GET['uName'])){
+            echo $_GET['uName'];
+        }
+        ?>";
+        
         var tabNo = "<?php 
         if(isset($_GET['tabNo'])){
             echo $_GET['tabNo'];
@@ -137,31 +153,62 @@ if(!isset($_SESSION['username'])){
             document.getElementById("default").click();
 
         }
-
         //load interviewers
         $( document ).ready(function() {
-            var intList = $(".interListTable");
-            var scheduleList = $(".scheduleListCont");
+            var intList = $(".interListTable1");
+            var finishedList = $(".finishedListTable");
             var selectedList = $(".selectedListTable");
+            var viewCand=$(".viewCandCont")
             
-            $.get("../controllers/searchDataController.php?q=listInterviewers", {}).done(function(data){
+            $.get("../controllers/intController.php?q=listInterviews", {}).done(function(data){
                 intList.html(data);     
             });
-            $.get("../controllers/searchDataController.php?q=listSchedules", {}).done(function(data){
-                scheduleList.html(data); 
+            $.get("../controllers/intController.php?q=finishedList", {}).done(function(data){
+                finishedList.html(data); 
             });
-            $.get("../controllers/searchDataController.php?q=selectedList", {}).done(function(data){
+            $.get("../controllers/intController.php?q=selectedList", {}).done(function(data){
                 selectedList.html(data); 
+            });
+           $.get("../controllers/intController.php?q=viewRespondedCand", {uName:uName}).done(function(data){
+             viewCand.html(data); 
             });
             
         });
 
-        $(".addNewInter").on("click",function(){
-            window.location.href = "../views/signup_inter.php";
-        })
-       
+        var ratedIndex = -1;
+         rate;
+$(document).ready(function(){
     
-    </script>
+ $('.fa-star').on('click',function(){
+    ratedIndex = parseInt($(this).data('index'));
+    rate = ratedIndex+1;
+    
+    //localStorage.setItem('ratedIndex', ratedIndex);
+    document.getElementById("rate").value = rate;
+    
+
+});
+$('.fa-star').mouseover(function(){
+     $('.fa-star').css('color','black');
+        var currentIndex = parseInt($(this).data('index'));
+        setStars(currentIndex);
+});
+
+$('.fa-star').mouseleave(function(){
+     $('.fa-star').css('color','black');
+       if (ratedIndex !=-1 )
+       setStars(ratedIndex);
+         
+         });
+});
+
+function setStars(max){
+    for(var i=0;i<=max;i++)
+              $('.fa-star:eq('+i+')').css('color','teal');
+        
+    }
+        
+ </script>
 
         
   </body> 
